@@ -1,0 +1,114 @@
+{
+  "id": "yk-11-yingbi",
+  "title": "A箱B箱硬币",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 11,
+  "section": "思维锦囊8",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "A箱里只有5角钱的硬币，B箱里只有2角的硬币，①A箱里的钱数比B箱里的钱数多1.50元，②B箱里的硬币比A箱里的硬币多24个。那么A箱和B箱里共有多少个硬币？",
+  "answer": "两箱一共 66 个硬币。",
+  "scene": {
+    "objects": [
+      { "id": "rA", "type": "Bench", "position": [0, 0, 0], "label": "A箱", "slots": 21, "show": [[1, 3], [20, 21]],
+        "compactShow": [[1, 1], [21, 21]],
+        "countLabel": false, "container": "none" },
+      { "id": "rB", "type": "Bench", "position": [2.6, -2.0, 0], "label": "B箱", "slots": 45, "show": [[1, 3], [20, 22], [44, 45]],
+        "compactShow": [[1, 1], [21, 22], [44, 45]],
+        "countLabel": false, "container": "none", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-4.0, 1.05, 0.6], "to": [-4.0, -0.55, 0.6], "text": "每个硬币差 5−2=3", "compactOffset": [1.95, 0, 0], "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [5.2, 1.05, 0.6], "to": [5.2, -0.55, 0.6], "text": "总差 15+24×2=63", "compactOffset": [2.4, 0, 0], "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.2, 13], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：比的是钱，问的是个数",
+      "narration": "A 箱里全是 **5 角** 的硬币，B 箱里全是 **2 角** 的硬币。\n\n① A 箱的钱比 B 箱 **多 1.50 元**；\n② B 箱的硬币比 A 箱 **多 24 个**。\n\n问：两箱一共有多少个硬币？\n\n**重点思考：** 比的是**钱**，问的是**硬币个数**。那就把“面值”一个一个分给硬币：每个硬币上都写着自己值多少钱。\n\n先看 A 箱：每个硬币都写 **5角**。",
+      "formula": "\\text{A 箱：每个硬币 }5\\text{ 角}",
+      "actions": [
+        { "do": "fill", "target": "rA", "slots": "all", "segments": [{ "kind": "block", "text": "5角", "color": "#f7d06b" }] }
+      ]
+    },
+    {
+      "title": "先统一单位：1.50 元 = 15 角",
+      "narration": "一边说 **元**，硬币那边是 **角**，单位不一样，没法直接减。\n\n**1 元 = 10 角**，所以 **1.50 元 = 15 角**。\n\nA 箱的钱比 B 箱多 **15 角**。",
+      "formula": "1.50\\text{ 元}=15\\text{ 角}"
+    },
+    {
+      "title": "② B 箱的硬币多 24 个",
+      "narration": "B 箱的硬币比 A 箱 **多 24 个**。\n\n所以 B 箱的硬币，就是“**和 A 箱一样多**”再加“**多出来的 24 个**”。\n\n把 B 箱也摆出来：每个硬币写 **2角**。中间用“…”省略，先不数。",
+      "formula": "\\text{B 箱的个数}=\\text{A 箱的个数}+24",
+      "actions": [
+        { "do": "move", "target": "rA", "position": [0, 2.0, 0] },
+        { "do": "show", "target": "rB" },
+        { "do": "fill", "target": "rB", "slots": "all", "segments": [{ "kind": "block", "text": "2角", "color": "#d5dbe3" }] }
+      ]
+    },
+    {
+      "title": "把多出来的 24 个划掉",
+      "narration": "B 箱末尾的这 **24 个**（大括号下面），就是 B 比 A 多的。\n\n把它们划掉，两行就一样长了：**A 箱的硬币和 B 箱剩下的硬币，个数相同**。\n\n这下可以一个对着一个地比钱了。",
+      "formula": "\\text{B 箱}=\\text{A 箱的个数}+24",
+      "actions": [
+        { "do": "mark", "target": "rB", "slots": [22, 45], "style": "cross" },
+        { "do": "brace", "target": "rB", "slots": [22, 45], "text": "24个" }
+      ]
+    },
+    {
+      "title": "用 ☆ 记 B 箱的钱数",
+      "narration": "B 箱一共有多少钱？还不知道，就记作 **☆**。\n\n划掉的 24 个硬币，每个 2 角，一共 **24×2=48 角**。所以 B 箱**剩下的**那些硬币，钱是 **☆−24×2**（比 ☆ 少）。\n\nA 箱比 B 箱多 15 角，所以 A 箱的钱是 **☆+15**（比 ☆ 多）。\n\n（☆ 就是 B 箱的钱数，是一个我们还不知道的数。）",
+      "formula": "\\text{A 箱：}\\star+15\\qquad\\text{B 箱剩下：}\\star-24\\times 2",
+      "actions": [
+        { "do": "remainder", "target": "rA", "value": { "type": "extra", "text": "共☆+15" } },
+        { "do": "remainder", "target": "rB", "value": { "type": "short", "text": "共☆−24×2" } }
+      ]
+    },
+    {
+      "title": "想一想：☆−24×2 比 ☆ 大还是小？",
+      "type": "quiz",
+      "narration": "先别急着算，想一想。",
+      "question": "B 箱剩下的钱记作 ☆−24×2，它比 ☆ ……",
+      "options": ["大", "小", "一样大"],
+      "answer": 1,
+      "explanation": "划掉 24 个硬币，就相当于从 ☆ 里拿走了 24×2=48 角，所以剩下的是 ☆−48 角，比 ☆ 小。"
+    },
+    {
+      "title": "每个硬币差 5−2=3 角",
+      "narration": "现在两行的硬币 **个数一样多** 了，可以一个对着一个地比。\n\nA 箱每个硬币 **5 角**，B 箱每个 **2 角**，一个硬币就差 **5−2=3 角**。",
+      "formula": "5-2=3\\text{（角）}",
+      "actions": [{ "do": "show", "target": "a1" }]
+    },
+    {
+      "title": "钱一共差 15+24×2=63 角",
+      "narration": "A 箱的钱是 **☆+15**，B 箱剩下的钱是 **☆−24×2**。\n\n两个 ☆ 一样多，正好抵消。剩下的差就是 **15+48=63 角**。\n\n也就是：**总差 = 15 + 24×2**。",
+      "formula": "15+24\\times 2=15+48=63\\text{（角）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "A 箱有多少个硬币？",
+      "narration": "一共差 **63 角**，每个硬币差 **3 角**。\n\n63 里面有几个 3，就有几个硬币：**63÷3=21**。\n\n这 21 个就是 A 箱的硬币数，也是划掉 24 个以后 B 箱剩下的个数。",
+      "formula": "\\begin{aligned}\\text{A：}&(15+24\\times 2)\\div(5-2)\\\\&=63\\div 3\\\\&=21\\text{（个）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "rA", "slots": [1, 21], "text": "A 21个", "side": "above" }]
+    },
+    {
+      "title": "B 箱有多少个硬币？",
+      "narration": "B 箱的硬币比 A 箱多 24 个：\n\n**21+24=45（个）**",
+      "formula": "21+24=45\\text{（个）}",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "brace", "target": "rB", "slots": [1, 45], "text": "B 45个", "side": "above" }
+      ]
+    },
+    {
+      "title": "两箱一共多少个？",
+      "narration": "A 箱 21 个，B 箱 45 个，加起来：\n\n**21+45=66（个）**",
+      "formula": "21+45=66\\text{（个）}"
+    },
+    {
+      "title": "验算，再记住方法",
+      "narration": "验算：A 箱 **21×5=105 角**，B 箱 **45×2=90 角**，105−90=**15 角**，正好是 1.50 元 ✓\n\n方法：\n- **把面值分给硬币**：每个硬币上写着 5 角或 2 角。\n- **先统一硬币个数**：把 B 多的 24 个划掉，才能一个对一个地比。\n- **份数 = 总差 ÷ 每份差**：63÷3=21。",
+      "formula": "\\begin{aligned}\\text{A：}21\\times 5&=105\\\\\\text{B：}45\\times 2&=90\\\\105-90&=15\\text{（角）}\\end{aligned}"
+    }
+  ]
+}

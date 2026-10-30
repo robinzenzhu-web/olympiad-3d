@@ -1,0 +1,130 @@
+{
+  "id": "yk-07-niunai",
+  "title": "纯牛奶和酸奶",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 7,
+  "section": "小试牛刀1",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "超市里有纯牛奶和酸奶，纯牛奶每盒比酸奶贵6元。皮皮如果买8盒酸奶还剩10元；买4盒纯牛奶还差2元。皮皮一共带了多少钱？",
+  "answer": "34 元。",
+  "scene": {
+    "objects": [
+      {
+        "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 8, "show": [[1, 3], [7, 8]],
+        "container": "seat", "caption": "盒",
+        "countLabel": false,
+        "fill": [{ "kind": "block", "text": "酸" }],
+        "remainder": { "type": "extra", "text": "多10元", "items": [{ "kind": "block", "text": "10元", "height": 0.7 }] }
+      },
+      {
+        "id": "r2", "type": "Bench", "position": [0, -1.5, 0], "label": "②", "slots": 4,
+        "container": "seat", "caption": "盒", "visible": false,
+        "fill": [{ "kind": "block", "text": "酸" }, { "kind": "block", "text": "+6", "height": 0.6 }],
+        "remainder": { "type": "short", "text": "少2元", "items": [{ "kind": "block", "text": "2元", "height": 0.7 }] }
+      },
+      { "id": "a1", "type": "Arrow", "from": [-3.7, 1.0, 0.6], "to": [-3.7, -0.3, 0.6], "text": "每盒差 6元", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [4.9, 1.0, 0.6], "to": [4.9, -0.3, 0.6], "text": "总差 2+10+4个酸", "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.4, 12], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：把钱分给每一盒",
+      "narration": "超市里有纯牛奶和酸奶，**纯牛奶每盒比酸奶贵 6 元**。\n\n① 买 **8 盒酸奶**，还剩 **10 元**；\n② 买 **4 盒纯牛奶**，还差 **2 元**。\n\n问：皮皮一共带了多少钱？\n\n**想法：** 把钱分给每一盒，一盒就是一条板凳。记一盒酸奶的价钱是 **酸**，那么一盒纯牛奶就是 **酸+6**。",
+      "formula": "\\text{纯}=\\text{酸}+6"
+    },
+    {
+      "title": "② 买4盒纯牛奶，还差2元",
+      "narration": "先看 ②：只有 **4 盒**，每盒上写的是 **酸+6**（纯牛奶比酸奶贵 6 元）；盒子上方的 **纯** 就是“纯牛奶”。\n\n钱不够，还差 **2 元**，就是右边红色虚线的那一块。",
+      "formula": "\\text{②}\\ \\ \\text{酸}+6\\ \\cdots\\ \\text{酸}+6\\quad \\text{少 }2\\text{ 元}",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 1.5, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "countText": "纯", "segments": [{ "kind": "block", "text": "酸" }, { "kind": "block", "text": "+6", "height": 0.6 }] }
+      ]
+    },
+    {
+      "title": "想一想：能直接比吗？",
+      "type": "quiz",
+      "narration": "方法一：**统一盒数**，都看成 4 盒。",
+      "question": "① 买了 8 盒酸奶，② 买了 4 盒纯牛奶。盒数不一样、种类也不一样，能直接比吗？",
+      "options": ["能，直接比还剩多少", "不能，要先想办法让它们变得一样", "能，把 8 盒和 4 盒直接相减"],
+      "answer": 1,
+      "explanation": "对！要先让它们**变得一样**才能比。方法一：让**盒数**一样（① 也只买 4 盒）；方法二：让**种类**一样（② 的纯牛奶都换成酸奶）。下面两种都学。"
+    },
+    {
+      "title": "方法一：① 只买4盒酸，多10元+4个酸",
+      "narration": "买 8 盒酸奶还剩 10 元。现在只买 **4 盒**，就少花 4 盒酸奶的钱。\n\n所以剩下的钱变成 **10 元 再加 4 个酸**（右边行尾的两块）。",
+      "formula": "\\text{①}\\ \\ \\text{酸}\\ \\cdots\\ \\text{酸}\\quad \\text{多 }10\\text{ 元}+4\\text{个酸}",
+      "actions": [
+        { "do": "setSlots", "target": "r1", "slots": 4 },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多10元+4个酸", "items": [{ "kind": "block", "text": "10元", "height": 0.7 }, { "kind": "block", "text": "4个酸", "height": 0.7 }] } }
+      ]
+    },
+    {
+      "title": "方法一：每盒差 6 元",
+      "narration": "现在两行都是 **4 盒**，可以一盒一盒比了。\n\n① 每盒是“酸”，② 每盒是“酸+6”，**每盒差 6 元**。",
+      "formula": "6\\text{（元）}",
+      "actions": [{ "do": "show", "target": "a1" }]
+    },
+    {
+      "title": "方法一：一共差 4×6=24 元",
+      "narration": "4 盒，每盒差 6 元，一共差 **4×6=24 元**。\n\n这 24 元正好等于：② 缺的 2 元 + ① 多的 10 元 + 4 个“酸”的钱。",
+      "formula": "4\\times 6=2+10+4\\text{个酸}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "方法一：4个酸 = 24−2−10 = 12元",
+      "narration": "从 24 元里去掉缺的 **2 元**、多的 **10 元**，剩下的就是 **4 盒酸奶的钱**：\n\n24−2−10=**12 元**。",
+      "formula": "\\begin{aligned}4\\text{个酸}&=4\\times 6-2-10\\\\&=24-12\\\\&=12\\text{（元）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r1", "slots": [1, 4], "text": "4个酸=12元" }]
+    },
+    {
+      "title": "方法一：1盒酸3元，一共带34元",
+      "narration": "4 盒酸奶 12 元，1 盒就是 **12÷4=3 元**。\n\n再回到 ①：8 盒酸奶要 24 元，还剩 10 元，所以一共带 **34 元**。\n\n验算：4 盒纯牛奶要 4×(3+6)=36 元，34 元差 2 元 ✓",
+      "formula": "\\begin{aligned}1\\text{酸}&=12\\div 4=3\\text{（元）}\\\\\\text{共带}&=8\\times 3+10=34\\text{（元）}\\end{aligned}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "brace", "target": "r1", "slots": [1, 4], "text": "每盒 3 元", "side": "above" }
+      ]
+    },
+    {
+      "title": "方法二：回到题目，都换成酸奶",
+      "narration": "方法二：**统一牛奶的种类**——把纯牛奶都换成酸奶再比。\n\n先把画面恢复成题目的样子：① 8 盒酸奶多 10 元，② 4 盒纯牛奶少 2 元。",
+      "actions": [
+        { "do": "reset", "target": "r1" },
+        { "do": "reset", "target": "r2" },
+        { "do": "move", "target": "r1", "position": [0, 1.5, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "countText": "纯", "segments": [{ "kind": "block", "text": "酸" }, { "kind": "block", "text": "+6", "height": 0.6 }] },
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" }
+      ]
+    },
+    {
+      "title": "方法二：4盒纯换成4盒酸，多22元",
+      "narration": "把 ② 的 4 盒纯牛奶都换成酸奶：每盒省 6 元，一共省 **4×6=24 元**。\n\n本来差 2 元，补上 2 元后还多 **24−2=22 元**。所以 ② 变成：4 盒酸，多 22 元。",
+      "formula": "\\text{②}\\ \\ \\text{酸}\\ \\cdots\\ \\text{酸}\\quad \\text{多 }4\\times 6-2=22\\text{ 元}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": [1, 4], "countText": "", "segments": [{ "kind": "block", "text": "酸" }] },
+        { "do": "remainder", "target": "r2", "value": { "type": "extra", "text": "多4×6−2=22元", "items": [{ "kind": "block", "text": "22元", "height": 0.7 }] } }
+      ]
+    },
+    {
+      "title": "方法二：两种买法差 22−10=12 元",
+      "narration": "现在两行都是“酸”，可以直接比了：\n\n① 买 8 盒，多 10 元；② 买 4 盒，多 22 元。\n\n钱一样多，少买 **4 盒**，就多剩下 **22−10=12 元** —— 这 12 元就是 **4 盒酸奶的钱**。",
+      "formula": "22-10=12\\text{（元）}",
+      "actions": [
+        { "do": "setText", "target": "a2", "text": "差 22−10=12元" },
+        { "do": "show", "target": "a2" }
+      ]
+    },
+    {
+      "title": "方法二：1盒酸3元，一共带34元",
+      "narration": "4 盒酸奶 12 元，1 盒就是 **3 元**，一共带 **3×8+10=34 元**。\n\n两种方法答案一样：皮皮带了 **34 元**。\n- 方法一：统一**盒数**（都变成 4 盒）\n- 方法二：统一**种类**（都换成酸奶）",
+      "formula": "\\begin{aligned}1\\text{酸}&=12\\div 4=3\\\\\\text{共带}&=3\\times 8+10=34\\text{（元）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r2", "slots": [1, 4], "text": "4个酸=12元" }]
+    }
+  ]
+}

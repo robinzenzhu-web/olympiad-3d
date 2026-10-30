@@ -1,0 +1,117 @@
+{
+  "id": "yk-05-wufan",
+  "title": "午饭坐桌子",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 5,
+  "section": "思维锦囊4",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "同学们一起吃午饭。①如果每张桌子坐6人，那么还剩下22人没有座位。②入座时发现有3张桌子坏了，于是改为每张桌子坐8人，结果还是有6人没有座位。那么一共有多少名同学一起吃午餐？",
+  "answer": "142 名同学。",
+  "scene": {
+    "objects": [
+      { "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 20, "show": [[1, 3], [18, 20]], "container": "seat", "caption": "桌" },
+      { "id": "r2", "type": "Bench", "position": [0, -2.3, 0], "label": "②", "slots": 20, "show": [[1, 3], [18, 20]], "container": "seat", "caption": "桌", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-3.9, 1.5, 0.6], "to": [-3.9, 0.1, 0.6], "text": "每桌差 8−6=2", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [5.1, 1.5, 0.6], "to": [5.1, 0.1, 0.6], "text": "总差 22+18=40", "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.4, 12], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：为什么剩下的不一样？",
+      "narration": "同学们一起吃午饭。\n\n① 每张桌子坐 **6 人**，还有 **22 人** 没有座位；\n② 有 **3 张桌子坏了**，改成每张桌子坐 **8 人**，还是有 **6 人** 没有座位。\n\n问：一共有多少名同学一起吃午饭？\n\n**重点思考：** ① 用了几张桌子？② 能用几张桌子？两次桌子的数量**不一样**，怎么比呢？\n\n图里的“……”表示中间还有很多张桌子，先不数。"
+    },
+    {
+      "title": "① 每张桌坐6人，多22人",
+      "narration": "先看 ①：每张桌子坐 **6 人**，桌子全部坐满，还有 **22 人** 没有座位。\n\n右边行尾画的就是多出来的 22 人。",
+      "formula": "\\text{①}\\ \\ 6\\ \\ 6\\ \\cdots\\ 6\\quad \\text{多 }22\\text{ 人}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "token", "shape": "person", "count": 6 }] },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多22人", "items": [{ "kind": "block", "text": "22人", "height": 0.8 }] } }
+      ]
+    },
+    {
+      "title": "② 坏了3张桌，每张坐8人，还多6人",
+      "narration": "再看 ②：有 **3 张桌子坏了**（打红叉的最后 3 张），不能坐人。\n\n好桌子每张坐 **8 人**，坐满以后还有 **6 人** 站着。\n\n① 把所有桌子都坐满了，② 却少了 3 张桌子 —— **两次坐的桌子数不一样**，不能直接比。",
+      "formula": "\\text{②}\\ \\ 8\\ \\ 8\\ \\cdots\\ \\left[\\text{坏}\\ \\text{坏}\\ \\text{坏}\\right]\\quad \\text{多 }6\\text{ 人}",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 2.3, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "person", "count": 8 }] },
+        { "do": "fill", "target": "r2", "slots": [18, 20], "segments": [] },
+        { "do": "mark", "target": "r2", "slots": [18, 20], "style": "cross" },
+        { "do": "remainder", "target": "r2", "value": { "type": "extra", "text": "多6人", "items": [{ "kind": "block", "text": "6人", "height": 0.8 }] } }
+      ]
+    },
+    {
+      "title": "想一想：坏桌也坐满，能多坐几人？",
+      "type": "quiz",
+      "narration": "要想和 ① 对比，就要先让两行的**桌子数一样多**。假设这 3 张坏桌子也能用，把它们也坐满看看。",
+      "question": "3 张坏桌子如果也能用，每张坐 8 人，能多坐下多少人？",
+      "options": ["8 人", "11 人", "8×3=24 人"],
+      "answer": 2,
+      "explanation": "每张 8 人，3 张就是 **8×3=24** 人。可是我们手里只多出 6 个人，24 个座位坐不满，还差座位——继续看。"
+    },
+    {
+      "title": "转化：不是多6人，是少18人",
+      "narration": "坏桌子也算上，就多了 **24 个座位**。多出来的 6 个人先坐进去，还空着 **24−6=18** 个座位，也就是**还差 18 个人**才坐得满。\n\n所以 ② 不是“多6人”，而是 **“少18人”**。老师把“多6人”划掉，改成了“少 8×3−6=18 人”。",
+      "formula": "\\text{②}\\ \\ 8\\ \\ 8\\ \\cdots\\ 8\\quad \\text{少 }8\\times 3-6=18\\text{ 人}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": [18, 20], "segments": [{ "kind": "token", "shape": "person", "count": 8 }] },
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少8×3−6=18人", "was": "多6人", "items": [{ "kind": "block", "text": "18人", "height": 0.8 }] } }
+      ]
+    },
+    {
+      "title": "每桌差 8−6=2 人",
+      "narration": "同一张桌子：① 坐 6 人，② 坐 8 人，**每张桌子多坐 8−6=2 人**。\n\n蓝色的两个小人就是多坐的 2 人。",
+      "formula": "8-6=2\\text{（人）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": [1, 20], "segments": [{ "kind": "token", "shape": "person", "count": 6 }, { "kind": "token", "shape": "person", "count": 2, "color": "blue" }], "countText": "8" },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种坐法一共差 22+18=40 人",
+      "narration": "① 多 22 人，② 少 18 人。\n\n两种坐法要的座位数，**一共差 22+18=40 人**。",
+      "formula": "22+18=40\\text{（人）}",
+      "actions": [
+        { "do": "show", "target": "a2" },
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少8×3−6=18人", "items": [{ "kind": "block", "text": "18人", "height": 0.8 }] } }
+      ]
+    },
+    {
+      "title": "求桌子有几张",
+      "narration": "每张桌子差 2 人，一共差 40 人。\n\n40 里面有几个 2，就有几张桌子：**40÷2=20** 张。",
+      "formula": "\\begin{aligned}\\text{桌：}&(22+18)\\div(8-6)\\\\&=40\\div 2\\\\&=20\\text{（张）}\\end{aligned}",
+      "actions": [
+        { "do": "unmark", "target": "r2" },
+        { "do": "brace", "target": "r2", "slots": [1, 20], "text": "20 桌" }
+      ]
+    },
+    {
+      "title": "求同学有多少名",
+      "narration": "20 张桌子，按 ① 每张坐 6 人，是 **120 人**，再加上没有座位的 22 人：**142 人**。\n\n验算：按 ② 20 张桌子每张 8 人，能坐 160 人，142 人还差 18 个座位，20×8−18=142 ✓",
+      "formula": "\\begin{aligned}\\text{人：}&20\\times 6+22\\\\&=120+22\\\\&=142\\text{（人）}\\end{aligned}\\quad\\left(\\text{或：}20\\times 8-18\\right)",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "brace", "target": "r1", "slots": [1, 20], "text": "20×6=120人", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：先统一桌数",
+      "narration": "这一题的方法：\n- **先统一板凳数（桌数）：** ② 少了 3 张坏桌，就假设它们也能用，两行都是 20 张桌子。\n- **转化成“少”：** 坏桌也能坐满 → 不是多 6 人，而是少 8×3−6=18 人。\n- **份数 = 总差 ÷ 每份差：** (22+18)÷(8−6)=20 张桌子，一共 **142 名**同学。",
+      "formula": "\\text{桌数}=\\text{总差}\\div\\text{每桌差}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "setText", "target": "a1", "text": "每桌差 2" },
+        { "do": "setText", "target": "a2", "text": "总差 40" },
+        { "do": "show", "target": "a1" },
+        { "do": "show", "target": "a2" },
+        { "do": "brace", "target": "r2", "slots": [1, 20], "text": "20 桌" }
+      ]
+    }
+  ]
+}

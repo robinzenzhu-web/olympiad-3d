@@ -1,0 +1,105 @@
+{
+  "id": "cube-paint-3",
+  "title": "正方体表面涂色（3×3×3）",
+  "grade": [4, 5],
+  "tags": ["立体几何", "涂色问题", "计数"],
+  "problem": "把一个棱长是 3 厘米的正方体木块，表面全部涂上红色，然后把它切成棱长是 1 厘米的小正方体（一共 27 块）。其中：三面涂色的、两面涂色的、一面涂色的、没有涂色的小正方体各有多少块？",
+  "answer": "三面涂色 8 块，两面涂色 12 块，一面涂色 6 块，没有涂色 1 块（8 + 12 + 6 + 1 = 27）",
+  "scene": {
+    "objects": [
+      { "id": "cube", "type": "CubeGrid", "size": [3, 3, 3], "paint": "surface" }
+    ],
+    "camera": { "position": [6, 4.5, 7] }
+  },
+  "steps": [
+    {
+      "title": "先读题，想一想",
+      "narration": "这是一个 **3×3×3** 的大正方体，外面一层全部涂成了**红色**。\n它是由 3×3×3 = **27** 个小正方体拼起来的。\n\n拖动一下画面转一转，看看它的六个面。我们要把它切开，再数一数每种小正方体有几块。",
+      "formula": "3 \\times 3 \\times 3 = 27",
+      "autoRotate": true
+    },
+    {
+      "title": "把大正方体切开",
+      "narration": "沿着线把它切成 27 个小正方体。\n\n现在每一块都分开了，你会发现：**有的小正方体有好几个面是红色，有的一个红面都没有**。\n\n红色的面，就是原来在大正方体“外面”的面。",
+      "actions": [{ "do": "explode", "target": "cube", "gap": 0.5 }]
+    },
+    {
+      "title": "猜一猜",
+      "type": "quiz",
+      "question": "三面涂色的小正方体，会出现在大正方体的哪个位置？",
+      "options": ["8 个顶点（角上）", "12 条棱的中间", "6 个面的中央", "最中心"],
+      "answer": 0,
+      "explanation": "对啦！在角上的小正方体，同时碰到大正方体的 3 个面，所以有 3 个面是红色的。选错了也没关系，下一步我们一起把它们找出来。",
+      "narration": "先别急着数，凭感觉猜一猜，再看答案。"
+    },
+    {
+      "title": "三面涂色：8 个角",
+      "narration": "黄色的这些就是**三面涂色**的小正方体，它们都在大正方体的**角**上。\n\n正方体有 **8 个角**，所以三面涂色的有 **8 块**。",
+      "formula": "\\text{三面涂色} = 8",
+      "actions": [
+        { "do": "clear", "target": "cube" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 3 }, "color": "yellow" },
+        { "do": "number", "target": "cube", "filter": { "paintedFaces": 3 } }
+      ]
+    },
+    {
+      "title": "两面涂色：12 条棱",
+      "narration": "再来看**两面涂色**的小正方体，它们在大正方体的**棱**上（不算两头的角）。\n\n正方体有 **12 条棱**。每条棱有 3 块，去掉两头的角，只剩中间 **1 块**。\n\n所以两面涂色的有 12 × 1 = **12 块**。",
+      "formula": "\\text{两面涂色} = 12 \\times 1 = 12",
+      "actions": [
+        { "do": "clear", "target": "cube" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 2 }, "color": "yellow" },
+        { "do": "number", "target": "cube", "filter": { "paintedFaces": 2 } }
+      ]
+    },
+    {
+      "title": "一面涂色：6 个面的中央",
+      "narration": "**一面涂色**的小正方体，在每个面的**正中央**。\n\n大正方体有 **6 个面**，每个面是 3×3 = 9 块，去掉周围一圈（4 个角 + 4 条棱），只剩中间 **1 块**。\n\n所以一面涂色的有 6 × 1 = **6 块**。",
+      "formula": "\\text{一面涂色} = 6 \\times 1 = 6",
+      "actions": [
+        { "do": "clear", "target": "cube" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 1 }, "color": "yellow" },
+        { "do": "number", "target": "cube", "filter": { "paintedFaces": 1 } }
+      ]
+    },
+    {
+      "title": "没有涂色：藏在最里面",
+      "narration": "最后，**没有涂色**的小正方体，被外面一层包得严严实实，一个红面也没有。\n\n我把别的小正方体都变得几乎透明了，你看，藏在**正中心**的就是它。只有 **1 块**。",
+      "formula": "\\text{没有涂色} = 1",
+      "actions": [
+        { "do": "clear", "target": "cube" },
+        { "do": "fade", "target": "cube", "opacity": 0.08 },
+        { "do": "fade", "target": "cube", "filter": { "paintedFaces": 0 }, "opacity": 1 },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 0 }, "color": "yellow" },
+        { "do": "number", "target": "cube", "filter": { "paintedFaces": 0 } }
+      ]
+    },
+    {
+      "title": "检验：加起来是 27 吗？",
+      "narration": "四种小正方体合在一起，看看对不对：\n\n**8**（黄，角）+ **12**（蓝，棱）+ **6**（绿，面中央）+ **1**（紫，最中心）= **27**\n\n正好等于小正方体的总数，说明我们没有数多，也没有数少。",
+      "formula": "8 + 12 + 6 + 1 = 27",
+      "actions": [
+        { "do": "clear", "target": "cube" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 3 }, "color": "yellow" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 2 }, "color": "blue" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 1 }, "color": "green" },
+        { "do": "highlight", "target": "cube", "filter": { "paintedFaces": 0 }, "color": "purple" }
+      ]
+    },
+    {
+      "title": "动手试一试：边长变了呢？",
+      "type": "explore",
+      "narration": "拖动下面的滑块，把大正方体的**边长 n** 变一变（n 就是每条棱上有几块）。\n\n看看四种颜色的数量怎么变：\n- **角**永远是 8 块\n- **棱**上每条有 n − 2 块\n- **面**上每个面有 (n − 2) × (n − 2) 块\n- **里面**是 (n − 2) × (n − 2) × (n − 2) 块\n\n你发现规律了吗？",
+      "actions": [{ "do": "explode", "target": "cube", "gap": 0.3 }],
+      "control": {
+        "param": "n",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "default": 3,
+        "bind": [{ "target": "cube", "prop": "size", "value": ["n", "n", "n"] }]
+      },
+      "formulaTemplate": "\\begin{aligned} n &= {{n}} \\\\ \\text{三面（黄）} &= 8 \\\\ \\text{两面（蓝）} &= 12 \\times (n-2) = {{12*(n-2)}} \\\\ \\text{一面（绿）} &= 6 \\times (n-2)^2 = {{6*(n-2)^2}} \\\\ \\text{零面（紫）} &= (n-2)^3 = {{(n-2)^3}} \\\\ \\text{合计} &= n^3 = {{n^3}} \\end{aligned}"
+    }
+  ]
+}

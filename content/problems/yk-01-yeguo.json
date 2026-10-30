@@ -1,0 +1,115 @@
+{
+  "id": "yk-01-yeguo",
+  "title": "沙和尚分野果",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 1,
+  "section": "承前启后",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "沙和尚给小朋友们分野果。①如果每个小朋友分3颗野果，最后还剩下16颗野果；②如果每个小朋友分5颗野果，有两个小朋友分不到野果。一共有几名小朋友？一共有多少颗野果？",
+  "answer": "13 名小朋友，55 颗野果。",
+  "scene": {
+    "objects": [
+      { "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 13, "show": [[1, 3], [12, 13]], "container": "person", "caption": "人" },
+      { "id": "r2", "type": "Bench", "position": [0, -1.9, 0], "label": "②", "slots": 13, "show": [[1, 3], [12, 13]], "container": "person", "caption": "人", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-3.25, 1.2, 0.6], "to": [-3.25, -0.1, 0.6], "text": "每人差 5−3=2", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [4.74, 1.4, 0.6], "to": [4.74, -0.1, 0.6], "text": "总差 16+10=26", "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.4, 12], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：先想一想",
+      "narration": "沙和尚要给小朋友们分野果。\n\n① 每人分 **3 颗**，最后还剩 **16 颗**；\n② 每人分 **5 颗**，有 **两个** 小朋友分不到。\n\n问：一共有几名小朋友？一共有多少颗野果？\n\n**重点思考：** 小朋友的人数不变，野果的数量也不变，为什么两种分法剩下的情况不一样呢？\n\n图里的“……”表示中间还有很多小朋友，先不数。"
+    },
+    {
+      "title": "① 每人分3颗，还剩16颗",
+      "narration": "先看 ①：每个小朋友分 **3 颗**，分完以后还剩 **16 颗**。\n\n像老师写板书那样记下来，右边多出来的就是剩下的野果。",
+      "formula": "\\text{①}\\ \\ 3\\ \\ 3\\ \\cdots\\ 3\\quad \\text{多 }16\\text{ 颗}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "token", "shape": "ball", "count": 3 }] },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多16颗", "items": [{ "kind": "token", "shape": "ball", "count": 16 }] } }
+      ]
+    },
+    {
+      "title": "② 每人分5颗，两个人分不到",
+      "narration": "再看 ②：每个小朋友分 **5 颗**。分着分着野果不够了，最后 **两个小朋友**（黄色的）什么也没分到。",
+      "formula": "\\text{②}\\ \\ 5\\ \\ 5\\ \\cdots\\ 5",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 1.9, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "ball", "count": 5 }] },
+        { "do": "fill", "target": "r2", "slots": [12, 13], "segments": [] },
+        { "do": "mark", "target": "r2", "slots": [12, 13], "style": "highlight", "color": "yellow" }
+      ]
+    },
+    {
+      "title": "想一想：野果是多了还是少了？",
+      "type": "quiz",
+      "narration": "分的是 **野果**，所以要把“两个小朋友分不到”，**转化成野果的情况**。",
+      "question": "最后两个小朋友分不到野果，是说野果比“每人分 5 颗”需要的数量……",
+      "options": ["多了", "少了", "正好"],
+      "answer": 1,
+      "explanation": "对！每人分 5 颗，这两个小朋友还没拿到，野果不够，所以是“少了”。到底少了多少？继续看。"
+    },
+    {
+      "title": "转化：野果少了 5×2=10 颗",
+      "narration": "两个小朋友每人还缺 **5 颗**，一共少 **5×2=10 颗**。\n\n右边虚线画出来的 10 颗，就是 ② 里少掉的野果。",
+      "formula": "\\text{②}\\ \\ 5\\ \\ 5\\ \\cdots\\ 5\\quad \\text{少 }5\\times 2=10\\text{ 颗}",
+      "actions": [
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少5×2=10颗", "items": [{ "kind": "token", "shape": "ball", "count": 10 }] } },
+        { "do": "fill", "target": "r2", "slots": [12, 13], "segments": [{ "kind": "token", "shape": "ball", "count": 5 }] },
+        { "do": "mark", "target": "r2", "slots": [12, 13], "style": "ghost" }
+      ]
+    },
+    {
+      "title": "每个小朋友差 5−3=2 颗",
+      "narration": "对比同一个小朋友：① 分 3 颗，② 分 5 颗，**多分了 5−3=2 颗**。\n\n蓝色的就是每人多分的 2 颗。",
+      "formula": "5-3=2\\text{（颗）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "ball", "count": 3 }, { "kind": "token", "shape": "ball", "count": 2, "color": "blue" }], "countText": "5" },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种分法，一共差 16+10=26 颗",
+      "narration": "① 多 16 颗，② 少 10 颗。\n\n两种分法的野果数，**一共差 16+10=26 颗**。",
+      "formula": "16+10=26\\text{（颗）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "求小朋友有几个",
+      "narration": "每个小朋友差 2 颗，一共差 26 颗。\n\n26 里面有几个 2，就有几个小朋友：**26÷2=13**。",
+      "formula": "\\begin{aligned}\\text{人：}&(16+10)\\div(5-3)\\\\&=26\\div 2\\\\&=13\\text{（人）}\\end{aligned}",
+      "actions": [
+        { "do": "unmark", "target": "r2" },
+        { "do": "mark", "target": "r2", "slots": [12, 13], "style": "ghost" },
+        { "do": "brace", "target": "r2", "slots": [1, 13], "text": "13 人" }
+      ]
+    },
+    {
+      "title": "求野果有多少颗",
+      "narration": "13 个小朋友，按 ① 每人 3 颗，再加上剩下的 16 颗：\n\n**13×3+16=55（颗）**\n\n验算：按 ② 每人 5 颗，还少 10 颗，13×5−10=55，也是 55 颗。",
+      "formula": "\\begin{aligned}\\text{果：}&13\\times 3+16\\\\&=39+16\\\\&=55\\text{（颗）}\\end{aligned}\\quad\\left(\\text{或：}13\\times 5-10\\right)",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "brace", "target": "r1", "slots": [1, 13], "text": "13×3=39颗", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：分什么？",
+      "narration": "这一题的方法：\n- **分什么：** 分的是野果，就把“人”的情况转化成“野果”的情况（两个人分不到 = 少 10 颗）。\n- **差量分析：** 对比两种分法，找到 **总差**（16+10）和 **每份差**（5−3）。\n- **份数 = 总差 ÷ 每份差**，这里的“份”就是小朋友。",
+      "formula": "\\text{份数}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "setText", "target": "a1", "text": "每份差 2" },
+        { "do": "setText", "target": "a2", "text": "总差 26" },
+        { "do": "show", "target": "a1" },
+        { "do": "show", "target": "a2" },
+        { "do": "brace", "target": "r2", "slots": [1, 13], "text": "13 人" }
+      ]
+    }
+  ]
+}

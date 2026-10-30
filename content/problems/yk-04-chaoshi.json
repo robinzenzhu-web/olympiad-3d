@@ -1,0 +1,116 @@
+{
+  "id": "yk-04-chaoshi",
+  "title": "超市买东西",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 4,
+  "section": "思维锦囊3",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "小朋友们一起去超市买东西。超市里一包牛板筋3元钱，一袋酱牛肉8元钱。①如果每人买4包牛板筋、2袋酱牛肉，还能剩下8元钱；②如果每人买2包牛板筋、3袋酱牛肉，就会缺少4元钱。那么小朋友们共有多少人？",
+  "answer": "6 人（一共带了 176 元）。",
+  "scene": {
+    "objects": [
+      { "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 6, "show": [[1, 2], [5, 6]], "container": "person", "caption": "人" },
+      { "id": "r2", "type": "Bench", "position": [0, -1.9, 0], "label": "②", "slots": 6, "show": [[1, 2], [5, 6]], "container": "person", "caption": "人", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-2.6, 1.5, 0.6], "to": [-2.6, -0.1, 0.6], "text": "每人差 30−28=2", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [3.85, 1.5, 0.6], "to": [3.85, 0.05, 0.6], "text": "总差 8+4=12", "visible": false }
+    ],
+    "camera": { "position": [0.3, 1.7, 9.0], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：表面看是买东西",
+      "narration": "超市里 **一包牛板筋 3 元**，**一袋酱牛肉 8 元**。\n\n① 每人买 **4 包牛板筋 + 2 袋酱牛肉**，钱还剩 **8 元**；\n② 每人买 **2 包牛板筋 + 3 袋酱牛肉**，钱就缺 **4 元**。\n\n问：一共有多少人？\n\n**重点思考：** 表面上看，两种方案买的东西不一样；本质上，比的是**每个人花掉的钱数**。"
+    },
+    {
+      "title": "① 每人：4包牛板筋 + 2袋酱牛肉",
+      "narration": "先按 ① 摆出来：每人 **4 包**牛板筋（蓝色小方块）、**2 袋**酱牛肉（黄色圆片）。\n\n图里的“……”表示还有很多人，先不数。",
+      "formula": "\\text{①}\\ \\ 4\\text{包}+2\\text{袋}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "token", "shape": "cube", "count": 4, "name": "包" }, { "kind": "token", "shape": "disc", "count": 2, "name": "袋" }] }
+      ]
+    },
+    {
+      "title": "本质：这些东西就是28元",
+      "narration": "4 包牛板筋：4×3=**12 元**；2 袋酱牛肉：2×8=**16 元**。\n\n加起来每人花 **12+16=28 元**。买的东西，本质上就是**花的钱数**。\n\n① 这样花完，钱还剩下 **8 元**。",
+      "formula": "4\\times 3+2\\times 8=12+16=28\\text{（元）}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "countText": "", "segments": [{ "kind": "block", "text": "28元" }] },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多8元", "items": [{ "kind": "block", "text": "8元" }] } }
+      ]
+    },
+    {
+      "title": "② 每人：2包牛板筋 + 3袋酱牛肉",
+      "narration": "再按 ② 摆出来：每人 **2 包**牛板筋、**3 袋**酱牛肉。这次买的东西不一样了。",
+      "formula": "\\text{②}\\ \\ 2\\text{包}+3\\text{袋}",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 1.9, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "cube", "count": 2, "name": "包" }, { "kind": "token", "shape": "disc", "count": 3, "name": "袋" }] }
+      ]
+    },
+    {
+      "title": "本质：这些东西是30元，还缺4元",
+      "narration": "2 包牛板筋 2×3=**6 元**，3 袋酱牛肉 3×8=**24 元**，一共 **6+24=30 元**。\n\n② 比 ① 每人多花 **30−28=2 元**，钱就不够了，还缺 **4 元**（红色虚线那块）。",
+      "formula": "2\\times 3+3\\times 8=6+24=30\\text{（元）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": "all", "countText": "", "segments": [{ "kind": "block", "text": "30元" }] },
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少4元", "items": [{ "kind": "block", "text": "4元" }] } }
+      ]
+    },
+    {
+      "title": "想一想：比的是什么？",
+      "type": "quiz",
+      "narration": "两种买法，买的东西不一样，怎么比？",
+      "question": "表面上买的东西不同，实际上我们要比的是……",
+      "options": ["买了多少包、多少袋", "每个小朋友花了多少钱", "超市里一共有多少东西"],
+      "answer": 1,
+      "explanation": "对！表面：买的东西；本质：花的钱数。① 每人 28 元，② 每人 30 元，比的就是这两笔钱。"
+    },
+    {
+      "title": "每人差 30−28=2 元",
+      "narration": "对比同一个小朋友：① 花 28 元，② 花 30 元，**每人多花 30−28=2 元**。\n\n蓝色的那块“+2”就是每人多花的钱。",
+      "formula": "30-28=2\\text{（元）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "block", "text": "28元" }, { "kind": "block", "text": "+2", "height": 0.6, "color": "#8ab4f8" }], "countText": "30元" },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种买法，一共差 8+4=12 元",
+      "narration": "① 多 8 元，② 少 4 元。\n\n两种买法的钱，**一共差 8+4=12 元**。",
+      "formula": "8+4=12\\text{（元）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "求小朋友有几人",
+      "narration": "每人差 2 元，一共差 12 元。\n\n12 里面有几个 2，就有几个小朋友：**12÷2=6**。",
+      "formula": "\\begin{aligned}\\text{人：}&(8+4)\\div(30-28)\\\\&=12\\div 2\\\\&=6\\text{（人）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r2", "slots": [1, 6], "text": "6 人" }]
+    },
+    {
+      "title": "验算：一共带了多少钱",
+      "narration": "6 个小朋友，按 ① 每人 28 元，再加上剩下的 8 元：**6×28+8=168+8=176（元）**。\n\n按 ② 每人 30 元，还缺 4 元：6×30−4=180−4=176（元），钱数一样。\n\n题目问的是人数，所以答案是 **6 人**。",
+      "formula": "\\begin{aligned}&6\\times 28+8=168+8=176\\\\&6\\times 30-4=180-4=176\\end{aligned}",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "brace", "target": "r1", "slots": [1, 6], "text": "6×28=168元", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：表面和本质",
+      "narration": "这一题的关键：\n- **表面：** 买的东西（4 包 + 2 袋 / 2 包 + 3 袋）。\n- **本质：** 花的钱数（28 元 / 30 元）。\n- **分什么：** 把钱“分给”每个人；每人差 2 元，总差 12 元。\n- **人数 = 总差 ÷ 每人差**。",
+      "formula": "\\text{份数}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "setText", "target": "a1", "text": "每人差 2 元" },
+        { "do": "setText", "target": "a2", "text": "总差 12 元" },
+        { "do": "show", "target": "a1" },
+        { "do": "show", "target": "a2" },
+        { "do": "brace", "target": "r2", "slots": [1, 6], "text": "6 人" }
+      ]
+    }
+  ]
+}

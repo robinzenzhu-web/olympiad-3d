@@ -1,0 +1,94 @@
+{
+  "id": "yk-12-xiaojie",
+  "title": "学有所得 · 本讲小结",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 12,
+  "section": "学有所得",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "本讲小结：盈亏问题（差量分析）的核心是什么？",
+  "answer": "份数（板凳数）= 总差 ÷ 每份差；复杂题先“转为相同型”：分什么、分给谁、怎么分。",
+  "scene": {
+    "objects": [
+      { "id": "yg1", "type": "Bench", "position": [0, 1.9, 0], "label": "①", "slots": 13, "show": [[1, 3], [12, 13]], "container": "person", "caption": "人", "fill": [{ "kind": "token", "shape": "ball", "count": 3 }], "remainder": { "type": "extra", "text": "多16颗", "items": [{ "kind": "token", "shape": "ball", "count": 16 }] } },
+      { "id": "yg2", "type": "Bench", "position": [0, -1.9, 0], "label": "②", "slots": 13, "show": [[1, 3], [12, 13]], "container": "person", "caption": "人", "fill": [{ "kind": "token", "shape": "ball", "count": 5 }], "remainder": { "type": "short", "text": "少5×2=10颗", "items": [{ "kind": "token", "shape": "ball", "count": 10 }] } },
+      { "id": "a1", "type": "Arrow", "from": [-3.25, 1.2, 0.6], "to": [-3.25, -0.1, 0.6], "text": "每人差 5−3=2" },
+      { "id": "a2", "type": "Arrow", "from": [4.74, 1.4, 0.6], "to": [4.74, -0.1, 0.6], "text": "总差 16+10=26" },
+      { "id": "wf1", "type": "Bench", "position": [0, 1.9, 0], "label": "①", "slots": 20, "show": [[1, 3], [18, 20]], "container": "seat", "caption": "桌", "fill": [{ "kind": "token", "shape": "person", "count": 6 }], "remainder": { "type": "extra", "text": "多22人" }, "visible": false },
+      { "id": "wf2", "type": "Bench", "position": [0, -1.9, 0], "label": "②", "slots": 20, "show": [[1, 3], [18, 20]], "container": "seat", "caption": "桌", "fill": [{ "kind": "token", "shape": "person", "count": 8 }], "remainder": { "type": "short", "text": "少8×3−6=18人" }, "visible": false },
+      { "id": "hc", "type": "Bench", "position": [0, 0, 0], "label": "船", "slots": 8, "container": "seat", "caption": "船", "fill": [{ "kind": "token", "shape": "person", "count": 8 }], "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.4, 12], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "一句话：份数 = 总差 ÷ 每份差",
+      "narration": "这一讲的题，都是把东西 **一份一份** 地分。这里的“份”就是板凳模型里的一条板凳：一个小朋友、一张桌子、一条船、一分钟……\n\n野果题：① 多 16 颗，② 少 10 颗，一共差 **16+10=26 颗**；每个小朋友差 **5−3=2 颗**。\n\n**26÷2=13（人）**，所以有 13 条板凳。",
+      "formula": "\\text{份数（板凳数）}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "fill", "target": "yg2", "slots": [12, 13], "segments": [] },
+        { "do": "mark", "target": "yg2", "slots": [12, 13], "style": "highlight", "color": "yellow" }
+      ]
+    },
+    {
+      "title": "三大相同 ① 分什么",
+      "narration": "可是题目常常没这么巧。记住 **三大相同**：分什么、分给谁、怎么分，都要先变得一样，复杂的题就变简单了。\n\n**分什么：** 分配的东西要一样。野果题分的是野果，就要把“两个小朋友分不到” **变成野果的情况**：\n\n每人缺 **5 颗**，两个人就少 **5×2=10 颗**（行尾的红色虚影）。",
+      "formula": "\\text{两人分不到}\\ \\Rightarrow\\ \\text{少 }5\\times 2=10\\text{ 颗}",
+      "actions": [{ "do": "brace", "target": "yg2", "slots": [12, 13], "text": "2人分不到" }]
+    },
+    {
+      "title": "三大相同 ② 分给谁",
+      "narration": "**分给谁：** 每一行板凳的 **数量要一样**，才能一个对一个地比。\n\n午饭题里，② 有 3 张桌子坏了，桌子的张数就和 ① 不一样了。\n\n假设坏掉的 3 张桌子也 **照样坐满 8 人**：原来多 6 人，就变成少 **8×3−6=18 人**。桌子的张数一统一，就能算了。",
+      "formula": "8\\times 3-6=18\\text{（人）}",
+      "actions": [
+        { "do": "hide", "target": "yg1" },
+        { "do": "hide", "target": "yg2" },
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "show", "target": "wf1" },
+        { "do": "show", "target": "wf2" },
+        { "do": "mark", "target": "wf2", "slots": [18, 20], "style": "cross" }
+      ]
+    },
+    {
+      "title": "三大相同 ③ 怎么分",
+      "narration": "**怎么分：** 每次分给每份的 **数量要一样**。\n\n划船题里，一半的船坐 8 人，一半的船坐 10 人，每份的量不一样。先把它们摆出来看看。",
+      "formula": "\\text{一半 }8\\text{ 人，一半 }10\\text{ 人}",
+      "actions": [
+        { "do": "hide", "target": "wf1" },
+        { "do": "hide", "target": "wf2" },
+        { "do": "show", "target": "hc" },
+        { "do": "fill", "target": "hc", "slots": [1, 4], "segments": [{ "kind": "token", "shape": "person", "count": 10 }] }
+      ]
+    },
+    {
+      "title": "挪一挪：每条船都 9 人",
+      "narration": "把 10 人船上的 1 个人，挪到 8 人船上去——\n\n每条船都变成了 **9 人**！\n\n(10+8)÷2=9，就是 **平均一下**，把每份的量统一成 9 人。这样再和 ① 的每条 7 人比，就能算了。",
+      "formula": "(10+8)\\div 2=9\\text{（人）}",
+      "actions": [
+        { "do": "transfer", "target": "hc", "from": [1, 4], "to": [5, 8], "count": 1 },
+        { "do": "brace", "target": "hc", "slots": [1, 8], "text": "每条 9 人", "side": "above" }
+      ]
+    },
+    {
+      "title": "差量分析：本质就是对比两种状态",
+      "narration": "所有这类题，本质都是 **对比两种状态**，先找出“总差”：\n\n- **盈亏**：两种分配方案，比分配结果（多的 + 少的）\n- **总价**：两种购买方案，比花掉的总价\n- **行程**：两种前进速度，比走完的路程\n\n找到总差，再除以每份差，就得到份数。"
+    },
+    {
+      "title": "复习公式：一盈一亏怎么算",
+      "narration": "最后把公式记牢：\n\n- 一盈一亏：**总差 = 多 + 少**（野果题 16+10=26）\n- **每份差 = 大的每份 − 小的每份**（5−3=2）\n- **份数 = 总差 ÷ 每份差**（26÷2=13 人）",
+      "formula": "\\begin{aligned}\\text{总差}&=\\text{多}+\\text{少}\\\\\\text{每份差}&=\\text{大的每份}-\\text{小的每份}\\\\\\text{份数}&=\\text{总差}\\div\\text{每份差}\\end{aligned}",
+      "actions": [
+        { "do": "hide", "target": "hc" },
+        { "do": "show", "target": "yg1" },
+        { "do": "show", "target": "yg2" },
+        { "do": "show", "target": "a1" },
+        { "do": "show", "target": "a2" },
+        { "do": "unmark", "target": "yg2" },
+        { "do": "fill", "target": "yg2", "slots": [12, 13], "segments": [{ "kind": "token", "shape": "ball", "count": 5 }] },
+        { "do": "clearNotes", "target": "yg2" },
+        { "do": "brace", "target": "yg2", "slots": [1, 13], "text": "13 人" }
+      ]
+    }
+  ]
+}

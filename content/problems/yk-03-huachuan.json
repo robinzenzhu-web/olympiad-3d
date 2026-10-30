@@ -1,0 +1,123 @@
+{
+  "id": "yk-03-huachuan",
+  "title": "划船",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 3,
+  "section": "思维锦囊2",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "同学们一起去划船，为此向公园预订了一批小船。①如果每条船安排7人，还余下10名同学；②如果一半的船安排8人，另一半的船安排10人，那么还能有6个空位。他们一共预订了多少条小船？一共有多少名同学？",
+  "answer": "8 条小船，66 名同学。",
+  "scene": {
+    "objects": [
+      { "id": "warm", "type": "Bench", "position": [0, 0, 0], "slots": 2, "container": "seat" },
+      { "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 8, "show": [[1, 2], [7, 8]], "container": "seat", "caption": "船", "visible": false },
+      { "id": "r2", "type": "Bench", "position": [0, -2.2, 0], "label": "②", "slots": 8, "show": [[1, 2], [7, 8]], "container": "seat", "caption": "船", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-2.6, 1.6, 0.6], "to": [-2.6, 0.55, 0.6], "text": "每条船差 9−7=2", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [4.2, 1.9, 0.6], "to": [4.2, 0.75, 0.6], "text": "总差 10+6=16", "textAt": "end", "visible": false }
+    ],
+    "camera": { "position": [0.3, 0.9, 4.6], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：先想想怎么分",
+      "narration": "同学们去划船，向公园**预订了一批小船**。\n\n① 每条船坐 **7 人**，还余下 **10 名**同学；\n② **一半**的船坐 8 人，**另一半**坐 10 人，那么只剩 **6 个空位**。\n\n问：预订了多少条小船？一共多少名同学？\n\n先看两条板凳，热热身。"
+    },
+    {
+      "title": "暖场：左边4人，右边2人",
+      "narration": "两条板凳，左边坐 **4 人**，右边坐 **2 人**。\n\n这样一样多吗？要让两边一样多，得挪一挪。",
+      "actions": [
+        { "do": "fill", "target": "warm", "slots": [1, 1], "segments": [{ "kind": "token", "shape": "person", "count": 4 }] },
+        { "do": "fill", "target": "warm", "slots": [2, 2], "segments": [{ "kind": "token", "shape": "person", "count": 2 }] }
+      ]
+    },
+    {
+      "title": "想一想：挪几个人？",
+      "type": "quiz",
+      "narration": "先算一算，再点选项。",
+      "question": "从左边 4 人那边挪几个人到右边，两条板凳就一样多？",
+      "options": ["挪 1 个", "挪 2 个", "挪 3 个"],
+      "answer": 0,
+      "explanation": "一共 4+2=6 人，平均给两条板凳，每条 3 人；左边 4 人挪 1 个过去，两边都是 3 人。"
+    },
+    {
+      "title": "挪1个：两条板凳都是3人",
+      "narration": "一共 **6 人**，分给 **2 条**板凳，平均每条 **3 人**。\n\n挪 1 个人飞过去，两条板凳就一样多了——这就是**把总数平均分**。\n\n划船题里也要这样：先把“一半 8 人、一半 10 人”变成每条船**一样多**。",
+      "formula": "(4+2)\\div 2=3\\text{（人）}",
+      "actions": [{ "do": "transfer", "target": "warm", "from": [1, 1], "to": [2, 2], "count": 1 }]
+    },
+    {
+      "title": "① 每条船7人，还余下10人",
+      "narration": "回到题目。每条船坐 **7 人**，人没坐完，还余下 **10 名**同学站在岸上。\n\n板书写成：「7 7 … 7 多10人」。图里的“……”表示中间的船先不画出来。",
+      "formula": "\\text{①}\\ \\ 7\\ \\ 7\\ \\cdots\\ 7\\quad\\text{多 }10\\text{ 人}",
+      "actions": [
+        { "do": "hide", "target": "warm" },
+        { "do": "show", "target": "r1" },
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "token", "shape": "person", "count": 7 }] },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多10人", "items": [{ "kind": "token", "shape": "person", "count": 10 }] } }
+      ]
+    },
+    {
+      "title": "② 一半船8人，一半船10人",
+      "narration": "第二种坐法：**一半**的船坐 **8 人**，**另一半**坐 **10 人**。\n\n每条船坐的人数不一样，没法直接比。怎么办？",
+      "formula": "\\text{②}\\ \\ 10\\ 10\\ \\cdots\\ 8\\ 8",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 2.2, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": [1, 4], "segments": [{ "kind": "token", "shape": "person", "count": 10 }] },
+        { "do": "fill", "target": "r2", "slots": [5, 8], "segments": [{ "kind": "token", "shape": "person", "count": 8 }] }
+      ]
+    },
+    {
+      "title": "转化：都变成每条9人",
+      "narration": "把 **10 人船**上的 1 个人，挪到 **8 人船**上去（看，人飞过去了）。\n\n10 人变 **9 人**，8 人变 **9 人**——每条船都是 **9 人**了！\n\n算一算：(10+8)÷2=**9**，一半一半的平均数就是 9。",
+      "formula": "(10+8)\\div 2=9\\text{（人）}",
+      "actions": [{ "do": "transfer", "target": "r2", "from": [1, 2], "to": [7, 8], "count": 1 }]
+    },
+    {
+      "title": "6个空位，就是少6人",
+      "narration": "按 ② 的坐法，全部坐好以后还剩 **6 个空位**。\n\n空位就是**少 6 个人**。分的是**人**，所以要把“空位”翻译成“人”的多少。",
+      "formula": "\\text{②}\\ \\ 9\\ \\ 9\\ \\cdots\\ 9\\quad\\text{少 }6\\text{ 人}",
+      "actions": [
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少6人", "items": [{ "kind": "token", "shape": "person", "count": 6 }] } }
+      ]
+    },
+    {
+      "title": "每条船差 9−7=2 人",
+      "narration": "对比同一条船：① 坐 7 人，② 坐 9 人，**每条船多坐 9−7=2 人**。\n\n蓝色的就是每条船多坐的 2 个人。",
+      "formula": "9-7=2\\text{（人）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "person", "count": 7 }, { "kind": "token", "shape": "person", "count": 2, "color": "blue" }], "countText": "9" },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种坐法，一共差 10+6=16 人",
+      "narration": "① 多 10 人，② 少 6 人。\n\n两种坐法的人数，**一共差 10+6=16 人**。",
+      "formula": "10+6=16\\text{（人）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "求小船只数",
+      "narration": "每条船差 2 人，一共差 16 人。\n\n16 里面有几个 2，就有几条船：**16÷2=8**。",
+      "formula": "\\begin{aligned}\\text{船：}&(10+6)\\div(9-7)\\\\&=16\\div 2\\\\&=8\\text{（条）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r2", "slots": [1, 8], "text": "8 条" }]
+    },
+    {
+      "title": "求同学有多少名",
+      "narration": "8 条船，按 ① 每条 7 人，再加上余下的 10 人：\n\n**8×7+10=56+10=66（人）**\n\n验算：4 条船坐 8 人、4 条船坐 10 人，一共 4×8+4×10=72 个座位；坐 66 人，正好空 72−66=6 个座位，和②说的一样。",
+      "formula": "\\begin{aligned}\\text{人：}&8\\times 7+10\\\\&=56+10\\\\&=66\\text{（人）}\\end{aligned}\\quad\\left(\\text{或：}8\\times 9-6\\right)",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "brace", "target": "r1", "slots": [1, 8], "text": "8×7=56人", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：怎么分？",
+      "narration": "这一题的关键在 **怎么分**：\n- 一半船坐 8 人、一半船坐 10 人，每份的量不一样，没法直接比。\n- 利用**平均数**统一每份量：(8+10)÷2=**9** —— 相当于**每条船都坐 9 人**。\n- 两份的量一样了，就能用差量分析：① 多 10 人，② 少 6 人，总差 **16 人**；每份差 **9−7=2 人**。\n- **份数 = 总差 ÷ 每份差** = 16÷2=8（条船），一共 66 名同学。",
+      "formula": "\\begin{aligned}\\text{每份量：}&(8+10)\\div 2=9\\\\\\text{份数}&=\\text{总差}\\div\\text{每份差}\\end{aligned}"
+    }
+  ]
+}

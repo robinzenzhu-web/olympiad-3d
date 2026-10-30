@@ -1,0 +1,115 @@
+{
+  "id": "yk-02-meigui",
+  "title": "玫瑰花瓶",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 2,
+  "section": "思维锦囊1",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "鲜花店老板准备把一些玫瑰花放进花瓶里。①如果每瓶放入6朵玫瑰，那么剩下的玫瑰花正好还能装3瓶；②如果每瓶中多放入2朵玫瑰，就会有3个瓶子是空的。那么一共有玫瑰花多少朵？",
+  "answer": "144 朵玫瑰（花瓶 21 个）。",
+  "scene": {
+    "objects": [
+      { "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 21, "show": [[1, 2], [19, 21]], "container": "box", "caption": "瓶" },
+      { "id": "r2", "type": "Bench", "position": [0, -1.9, 0], "label": "②", "slots": 21, "show": [[1, 2], [19, 21]], "container": "box", "caption": "瓶", "visible": false },
+      { "id": "a1", "type": "Arrow", "from": [-3.25, 1.5, 0.6], "to": [-3.25, -0.3, 0.6], "text": "每瓶差 8−6=2", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [4.74, 1.55, 0.6], "to": [4.74, 0.72, 0.6], "text": "总差 18+24=42", "visible": false }
+    ],
+    "camera": { "position": [0.3, 1.8, 9.2], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：花和瓶都没变",
+      "narration": "鲜花店老板要把一些玫瑰花**放进花瓶**里。\n\n① 每瓶放 **6 朵**，剩下的花正好还能装 **3 瓶**；\n② 每瓶**多放 2 朵**，就有 **3 个瓶子**空着。\n\n问：一共有多少朵玫瑰？\n\n**重点思考：** 花的总数没变，瓶子的个数也没变，为什么两种放法剩下的花不一样？\n\n图里的“……”表示中间还有很多花瓶，先不数。"
+    },
+    {
+      "title": "① 每瓶6朵，多出3瓶的花",
+      "narration": "第一种放法：每个花瓶放 **6 朵**。花还剩一些，剩下的“正好还能装 3 瓶”就是：再拿 3 个花瓶来，每个也能装满 6 朵。\n\n所以花多出来 **3×6=18 朵**（右边那堆）。",
+      "formula": "\\text{①}\\ \\ 6\\ \\ 6\\ \\cdots\\ 6\\quad\\text{多 }3\\times 6=18\\text{ 朵}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "token", "shape": "flower", "count": 6 }] },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多18朵", "items": [{ "kind": "token", "shape": "flower", "count": 18 }] } }
+      ]
+    },
+    {
+      "title": "② 每瓶多放2朵，3个瓶子空着",
+      "narration": "第二种放法：每瓶**多放入 2 朵**，是在 6 朵的基础上再多 2 朵，所以每瓶是 **6+2=8 朵**（不是每瓶 2 朵哦）。\n\n花就不够了，最后 **3 个瓶子**（黄色的）空着，一朵也没放上。",
+      "formula": "\\text{②}\\ \\ 8\\ \\ 8\\ \\cdots\\ 8",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 1.9, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "flower", "count": 8 }] },
+        { "do": "fill", "target": "r2", "slots": [19, 21], "segments": [] },
+        { "do": "mark", "target": "r2", "slots": [19, 21], "style": "highlight", "color": "yellow" }
+      ]
+    },
+    {
+      "title": "想一想：花是多了还是少了？",
+      "type": "quiz",
+      "narration": "分的是**花**，所以要把“3 个瓶子空着”**翻译成花的情况**。",
+      "question": "最后 3 个瓶子空着，说明花比“每瓶放 8 朵”需要的数量……",
+      "options": ["多了", "少了", "正好一样多"],
+      "answer": 1,
+      "explanation": "对！这 3 个瓶子还等着花，花不够用，所以是“少了”。少了多少？下一步看。"
+    },
+    {
+      "title": "转化：花少了 8×3=24 朵",
+      "narration": "3 个空瓶子，每个还差 **8 朵**，一共少 **8×3=24 朵**。\n\n右边虚线画出来的 24 朵，就是 ② 里少掉的花。",
+      "formula": "\\text{②}\\ \\ 8\\ \\ 8\\ \\cdots\\ 8\\quad\\text{少 }8\\times 3=24\\text{ 朵}",
+      "actions": [
+        { "do": "remainder", "target": "r2", "value": { "type": "short", "text": "少8×3=24朵", "items": [{ "kind": "token", "shape": "flower", "count": 24 }] } },
+        { "do": "fill", "target": "r2", "slots": [19, 21], "segments": [{ "kind": "token", "shape": "flower", "count": 8 }] },
+        { "do": "mark", "target": "r2", "slots": [19, 21], "style": "ghost" }
+      ]
+    },
+    {
+      "title": "每瓶差 8−6=2 朵",
+      "narration": "对比同一个花瓶：① 放 6 朵，② 放 8 朵，**每瓶多放 8−6=2 朵**。\n\n蓝色的就是每瓶多放的 2 朵。",
+      "formula": "8-6=2\\text{（朵）}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "token", "shape": "flower", "count": 6 }, { "kind": "token", "shape": "flower", "count": 2, "color": "blue" }], "countText": "8" },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种放法，一共差 18+24=42 朵",
+      "narration": "① 多 18 朵，② 少 24 朵。\n\n两种放法用的花，**一共差 18+24=42 朵**。",
+      "formula": "18+24=42\\text{（朵）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "求花瓶有几个",
+      "narration": "每瓶差 2 朵，一共差 42 朵。\n\n42 里面有几个 2，就有几个花瓶：**42÷2=21**。",
+      "formula": "\\begin{aligned}\\text{瓶：}&(18+24)\\div(8-6)\\\\&=42\\div 2\\\\&=21\\text{（瓶）}\\end{aligned}",
+      "actions": [
+        { "do": "unmark", "target": "r2" },
+        { "do": "mark", "target": "r2", "slots": [19, 21], "style": "ghost" },
+        { "do": "brace", "target": "r2", "slots": [1, 21], "text": "21 瓶" }
+      ]
+    },
+    {
+      "title": "求玫瑰花有多少朵",
+      "narration": "21 个花瓶，按 ① 每瓶 6 朵，再加上多出来的 18 朵：\n\n**21×6+18=126+18=144（朵）**\n\n验算：按 ② 每瓶 8 朵，还少 24 朵，21×8−24=168−24=144，也是 144 朵。",
+      "formula": "\\begin{aligned}\\text{花：}&21\\times 6+18\\\\&=126+18\\\\&=144\\text{（朵）}\\end{aligned}\\quad\\left(\\text{或：}21\\times 8-24\\right)",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "brace", "target": "r1", "slots": [1, 21], "text": "21×6=126朵", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：分什么？",
+      "narration": "这一题的关键：\n- **分什么：** 分的是花，就把“瓶子”的情况翻译成“花”的情况（3 个瓶子空着 = 少 24 朵）。\n- **每瓶差：** 8−6=2 朵；**总差：** 18+24=42 朵。\n- **瓶数 = 总差 ÷ 每瓶差**。\n- 小提醒：看到“每瓶多放 2 朵”，要先算出每瓶放 **8 朵**。",
+      "formula": "\\text{份数}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "setText", "target": "a1", "text": "每瓶差 2" },
+        { "do": "setText", "target": "a2", "text": "总差 42" },
+        { "do": "show", "target": "a1" },
+        { "do": "show", "target": "a2" },
+        { "do": "brace", "target": "r2", "slots": [1, 21], "text": "21 瓶" }
+      ]
+    }
+  ]
+}

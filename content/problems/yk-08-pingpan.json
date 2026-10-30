@@ -1,0 +1,223 @@
+{
+  "id": "yk-08-pingpan",
+  "title": "水果拼盘",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 8,
+  "section": "思维锦囊6",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析", "统一份数"],
+  "problem": "未来食堂用一批猕猴桃和哈密瓜来搭配水果拼盘。①如果每5个猕猴桃和3个哈密瓜装一盘，最后还多出4个猕猴桃，哈密瓜恰好装完；②如果7个猕猴桃和3个哈密瓜装一盘，最后还多出12个哈密瓜，猕猴桃恰好装完。则猕猴桃有多少个？哈密瓜有多少个？",
+  "answer": "猕猴桃 84 个，哈密瓜 48 个。",
+  "scene": {
+    "objects": [
+      {
+        "id": "p1",
+        "type": "Bench",
+        "position": [0, 0, 0],
+        "label": "①",
+        "slots": 16,
+        "show": [[1, 3], [13, 16]],
+        "compactShow": [[1, 1], [16, 16]],
+        "container": "plate",
+        "caption": "盘"
+      },
+      {
+        "id": "p2",
+        "type": "Bench",
+        "position": [0, -1.8, 0],
+        "label": "②",
+        "slots": 12,
+        "show": [[1, 3], [9, 12]],
+        "compactShow": [[1, 1], [12, 12]],
+        "container": "plate",
+        "caption": "盘",
+        "visible": false,
+        "fill": [{ "kind": "token", "shape": "ball", "count": 3, "color": "#5aa469", "name": "瓜" }]
+      },
+      {
+        "id": "a1",
+        "type": "Arrow",
+        "from": [-5.2, 1.6, 0.6],
+        "to": [-5.2, 0.5, 0.6],
+        "text": "每盘差 7−5=2",
+        "compactOffset": [3.25, 0, 0],
+        "visible": false
+      },
+      {
+        "id": "a2",
+        "type": "Arrow",
+        "from": [8.3, 1.5, 0.6],
+        "to": [8.3, -0.2, 0.6],
+        "text": "总差 4+28=32",
+        "compactOffset": [-3.25, 0, 0],
+        "visible": false
+      }
+    ],
+    "camera": { "position": [0.4, 2.4, 13], "target": [0.8, 0.2, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：两种装法",
+      "narration": "食堂要把猕猴桃和哈密瓜搭配成水果拼盘。\n\n① 每盘装 **5 个桃、3 个瓜**：最后桃还剩 **4 个**，瓜刚好用完；\n② 每盘装 **7 个桃、3 个瓜**：最后瓜还剩 **12 个**，桃刚好用完。\n\n问：猕猴桃有多少个？哈密瓜有多少个？\n\n**重点思考：** 两种装法装出来的**盘数一样多吗**？\n\n图里的“……”表示中间还有很多盘，先不数。"
+    },
+    {
+      "title": "① 每盘5桃3瓜：多4桃，瓜用完",
+      "narration": "先按 ① 装：每盘放 **5 个桃、3 个瓜**，一直装到**哈密瓜用完**为止。\n\n桃还剩 **4 个**，瓜一个不剩。",
+      "formula": "\\text{①}\\ \\ 5\\text{桃}3\\text{瓜}\\ \\cdots\\ 5\\text{桃}3\\text{瓜}\\quad \\text{多 }4\\text{ 桃}",
+      "actions": [
+        {
+          "do": "fill",
+          "target": "p1",
+          "slots": "all",
+          "segments": [
+            { "kind": "token", "shape": "ball", "count": 5, "color": "#f2749b", "name": "桃" },
+            { "kind": "token", "shape": "ball", "count": 3, "color": "#5aa469", "name": "瓜" }
+          ]
+        },
+        {
+          "do": "remainder",
+          "target": "p1",
+          "value": {
+            "type": "extra",
+            "text": "多4桃",
+            "items": [{ "kind": "token", "shape": "ball", "count": 4, "color": "#f2749b", "name": "桃" }]
+          }
+        }
+      ]
+    },
+    {
+      "title": "② 每盘7桃3瓜：多12瓜，桃用完",
+      "narration": "再按 ② 装：每盘放 **7 个桃、3 个瓜**，一直装到**猕猴桃用完**为止。\n\n这次桃用完了，瓜还多 **12 个**。\n\n注意看：① 的瓜装完了，② 的瓜还剩 **12 个**没装 —— 说明 ② 少装了几盘，两种装法的**盘数不一样**！",
+      "formula": "\\text{②}\\ \\ 7\\text{桃}3\\text{瓜}\\ \\cdots\\ 7\\text{桃}3\\text{瓜}\\quad \\text{多 }12\\text{ 瓜}",
+      "actions": [
+        { "do": "move", "target": "p1", "position": [0, 1.8, 0] },
+        { "do": "show", "target": "p2" },
+        {
+          "do": "fill",
+          "target": "p2",
+          "slots": [1, 12],
+          "segments": [
+            { "kind": "token", "shape": "ball", "count": 7, "color": "#f2749b", "name": "桃" },
+            { "kind": "token", "shape": "ball", "count": 3, "color": "#5aa469", "name": "瓜" }
+          ]
+        },
+        {
+          "do": "remainder",
+          "target": "p2",
+          "value": {
+            "type": "extra",
+            "text": "多12瓜",
+            "items": [{ "kind": "token", "shape": "ball", "count": 12, "color": "#5aa469", "name": "瓜" }]
+          }
+        }
+      ]
+    },
+    {
+      "title": "想一想：多出的12个瓜还能装几盘？",
+      "type": "quiz",
+      "narration": "两种装法都是 **3 个瓜装 1 盘**，都装到瓜用完为止 —— 所以盘数一定可以统一。",
+      "question": "② 多出来的 **12 个哈密瓜**，每盘 3 个，还能再装几盘？",
+      "options": ["2 盘", "4 盘", "12 盘"],
+      "answer": 1,
+      "explanation": "12÷3=4，还能再装 **4 盘**。把这 4 盘补上，② 也就装到瓜用完了，盘数就和 ① 一样多了！"
+    },
+    {
+      "title": "再装4盘：盘数一样多了",
+      "narration": "把这 12 个瓜再装 **4 盘**（黄色的这 4 盘）。\n\n现在 ② 的瓜也全部装完了。因为两种装法都是 **每盘 3 个瓜**，都装到瓜用完时，② 和 ① 的**盘数就一样多**了！",
+      "formula": "12\\div 3=4\\text{（盘）}",
+      "actions": [
+        { "do": "setSlots", "target": "p2", "slots": 16, "show": [[1, 3], [13, 16]], "compactShow": [[1, 1], [16, 16]] },
+        {
+          "do": "fill",
+          "target": "p2",
+          "slots": [13, 16],
+          "countText": "3瓜",
+          "segments": [{ "kind": "token", "shape": "ball", "count": 3, "color": "#5aa469", "name": "瓜" }]
+        },
+        { "do": "remainder", "target": "p2", "value": null },
+        { "do": "mark", "target": "p2", "slots": [13, 16], "style": "highlight", "color": "yellow", "tint": "container" }
+      ]
+    },
+    {
+      "title": "可这4盘没有桃：少了7×4=28个桃",
+      "narration": "② 每盘要 **7 个桃**，可是桃早就用完了。\n\n黄色这 4 盘一个桃也放不出来 —— 缺 **7×4=28 个桃**（右边的虚影）。\n\n所以 ② 真正的样子是：**桃少 28 个，瓜刚好用完**。老师把原来的“多12瓜”划掉，改成了“少7×4=28桃”。",
+      "formula": "7\\times 4=28\\text{（个桃）}",
+      "actions": [
+        {
+          "do": "remainder",
+          "target": "p2",
+          "value": {
+            "type": "short",
+            "text": "少7×4=28桃",
+            "was": "多12瓜",
+            "items": [{ "kind": "token", "shape": "ball", "count": 28, "color": "#f2749b", "name": "桃" }]
+          }
+        }
+      ]
+    },
+    {
+      "title": "每一盘多放 7−5=2 个桃",
+      "narration": "比一比同样的 1 盘：① 放 **5 个桃**，② 放 **7 个桃**。\n\n每一盘都多 **7−5=2 个桃**（蓝色的 2 个）。",
+      "formula": "7-5=2\\text{（个）}",
+      "actions": [
+        {
+          "do": "fill",
+          "target": "p2",
+          "slots": [1, 12],
+          "countText": "7桃3瓜",
+          "segments": [
+            { "kind": "token", "shape": "ball", "count": 5, "color": "#f2749b", "name": "桃" },
+            { "kind": "token", "shape": "ball", "count": 2, "color": "blue", "name": "桃" },
+            { "kind": "token", "shape": "ball", "count": 3, "color": "#5aa469", "name": "瓜" }
+          ]
+        },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种分法一共差 4+28=32 个桃",
+      "narration": "同样多的盘：① 多 **4 个桃**，② 少 **28 个桃**。\n\n两种分法一共差 **4+28=32 个桃**。",
+      "formula": "4+28=32\\text{（个）}",
+      "actions": [
+        { "do": "show", "target": "a2" },
+        {
+          "do": "remainder",
+          "target": "p2",
+          "value": {
+            "type": "short",
+            "text": "少7×4=28桃",
+            "items": [{ "kind": "token", "shape": "ball", "count": 28, "color": "#f2749b", "name": "桃" }]
+          }
+        }
+      ]
+    },
+    {
+      "title": "求一共有几盘",
+      "narration": "每一盘差 2 个桃，一共差 32 个桃。\n\n32 里面有几个 2，就有几盘：**32÷2=16**（盘）。",
+      "formula": "\\begin{aligned}\\text{盘：}&(28+4)\\div(7-5)\\\\&=32\\div 2\\\\&=16\\text{（盘）}\\end{aligned}",
+      "actions": [
+        { "do": "unmark", "target": "p2" },
+        { "do": "brace", "target": "p2", "slots": [1, 16], "text": "16 盘" }
+      ]
+    },
+    {
+      "title": "求猕猴桃和哈密瓜",
+      "narration": "一共 **16 盘**。\n\n**瓜：** 每盘 3 个，正好用完 → 16×3=**48（个）**\n\n**桃：** 16 盘用掉 16×5=80 个，再加上多的 4 个 → 80+4=**84（个）**\n\n验算：16×7−28=112−28=84，也是 84 个。",
+      "formula": "\\begin{aligned}\\text{瓜：}&16\\times 3=48\\\\ \\text{桃：}&16\\times 5+4=84\\end{aligned}",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "clearNotes", "target": "p2" },
+        { "do": "brace", "target": "p1", "slots": [1, 16], "text": "16盘×3个瓜=48个", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：统一盘数",
+      "narration": "这一题的关键：\n- **分什么**：分的是水果，把“瓜多 12 个”变成“还能再装 4 盘”。\n- **怎么分一样**：两种装法都是 **3 个瓜装 1 盘**，都装到**瓜用完**，盘数就统一了。\n- ② 补上 4 盘以后，缺的桃是 **7×4=28** 个。\n- **盘数 = 总差 ÷ 每盘差** = (4+28)÷(7−5) = 16（盘）。",
+      "formula": "\\text{份数}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "brace", "target": "p2", "slots": [1, 16], "text": "16 盘" }
+      ]
+    }
+  ]
+}

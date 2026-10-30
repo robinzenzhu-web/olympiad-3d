@@ -1,0 +1,172 @@
+{
+  "id": "yk-10-shangxue",
+  "title": "东东上学",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 10,
+  "section": "思维锦囊7",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析", "行程问题"],
+  "problem": "东东从家去学校，①如果每分钟走80米，结果比上课提前6分到校；②如果每分钟走50米，则要迟到3分钟。那么东东家到学校的路程是多少米？",
+  "answer": "1200 米。",
+  "scene": {
+    "objects": [
+      {
+        "id": "r1",
+        "type": "Bench",
+        "position": [-0.975, 0, 0],
+        "label": "①",
+        "slots": 21,
+        "show": [[1, 2], [16, 21]],
+        "compactShow": [[1, 1], [20, 21]],
+        "container": "none",
+        "caption": "分钟",
+        "countLabel": false
+      },
+      {
+        "id": "r2",
+        "type": "Bench",
+        "position": [0.975, -1.4, 0],
+        "label": "②",
+        "slots": 24,
+        "show": [[1, 2], [16, 24]],
+        "compactShow": [[1, 1], [20, 24]],
+        "container": "none",
+        "caption": "分钟",
+        "countLabel": false,
+        "visible": false
+      },
+      {
+        "id": "a1",
+        "type": "Arrow",
+        "from": [-6.975, 0.9, 0.6],
+        "to": [-6.975, -0.35, 0.6],
+        "compactOffset": [3.25, 0, 0],
+        "text": "每份差 80−50=30",
+        "visible": false
+      },
+      {
+        "id": "a2",
+        "type": "Arrow",
+        "from": [-1.625, 0.9, 0.6],
+        "to": [-1.625, -0.35, 0.6],
+        "compactOffset": [4.55, 0, 0],
+        "textSide": "right",
+        "text": "总差 480+150=630",
+        "visible": false
+      }
+    ],
+    "camera": { "position": [0, 2.6, 15], "target": [0, 0.2, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：两种走法",
+      "narration": "东东从家走路去学校。\n\n① 每分钟走 **80 米**，结果比上课时间**提前 6 分钟**到校；\n② 每分钟走 **50 米**，就要**迟到 3 分钟**。\n\n问：家到学校有多少米？\n\n**重点思考：** 这题“分”的是什么？—— 是把**路的长度**分给**每一分钟**。份数就是“准时到校要走几分钟”。"
+    },
+    {
+      "title": "① 每一分钟分 80 米",
+      "narration": "把“准时到校要走的分钟数”当份数摆一行：每一份是 **1 分钟**，放 **80 米**。\n\n最右边这条红色虚线，就是**准时到校**的时刻。",
+      "formula": "\\text{①}\\ \\ 80\\ \\ 80\\ \\cdots\\ 80\\ \\big|\\ \\text{准时到校}",
+      "actions": [
+        { "do": "fill", "target": "r1", "slots": "all", "segments": [{ "kind": "block", "text": "80米" }] },
+        { "do": "divider", "target": "r1", "after": 21, "text": "准时到校" }
+      ]
+    },
+    {
+      "title": "想一想：路够不够走？",
+      "type": "quiz",
+      "narration": "① 每分钟走 80 米，结果**提前 6 分钟**就到校了。",
+      "question": "提前到校，说明这段路比“每一分钟都走满 80 米”需要的长度……",
+      "options": ["多了", "少了", "正好"],
+      "answer": 1,
+      "explanation": "提前到，说明最后有几分钟**没有路可走** —— 路比“每分钟 80 米走满所有分钟”要**少**。少的就是那 6 分钟的路。"
+    },
+    {
+      "title": "① 少了 6×80=480 米",
+      "narration": "提前 6 分钟到校，就是最后 **6 分钟**（红色的那些）没有路可走。\n\n6 分钟 × 80 米 = **480 米** —— 这段路比“每分钟 80 米”少了 **480 米**。",
+      "formula": "6\\times 80=480\\text{（米）}",
+      "actions": [
+        { "do": "mark", "target": "r1", "slots": [16, 21], "style": "highlight", "color": "#e5484d" },
+        {
+          "do": "remainder",
+          "target": "r1",
+          "value": { "type": "short", "text": "少480米", "items": [{ "kind": "block", "text": "480米" }] }
+        }
+      ]
+    },
+    {
+      "title": "② 每一分钟分 50 米",
+      "narration": "② 每分钟走 **50 米**。同样按“准时到校”的分钟数摆一行，每一份放 **50 米**。\n\n走到“准时到校”线的时候，路**还没走完**。",
+      "formula": "\\text{②}\\ \\ 50\\ \\ 50\\ \\cdots\\ 50\\ \\big|\\ \\text{准时到校}",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [-0.975, 1.4, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "segments": [{ "kind": "block", "text": "50米" }] },
+        { "do": "divider", "target": "r2", "after": 21, "text": "准时到校" }
+      ]
+    },
+    {
+      "title": "② 多了 3×50=150 米",
+      "narration": "到了“准时到校”线（上课铃响时），东东还没到，还要再走 **3 分钟**（打红叉的 3 份）才能到学校。\n\n3 分钟 × 50 米 = **150 米** —— 这段路比“每分钟 50 米走满这些分钟”多了 **150 米**。",
+      "formula": "3\\times 50=150\\text{（米）}",
+      "actions": [
+        { "do": "mark", "target": "r2", "slots": [22, 24], "style": "cross" },
+        {
+          "do": "remainder",
+          "target": "r2",
+          "value": { "type": "extra", "text": "多150米", "items": [{ "kind": "block", "text": "150米" }] }
+        }
+      ]
+    },
+    {
+      "title": "每一份差 80−50=30 米",
+      "narration": "比一比同样的 1 分钟：① 分 **80 米**，② 分 **50 米**。\n\n每一份都差 **80−50=30 米**（蓝色的 +30）。",
+      "formula": "80-50=30\\text{（米）}",
+      "actions": [
+        {
+          "do": "fill",
+          "target": "r2",
+          "slots": [1, 21],
+          "segments": [
+            { "kind": "block", "text": "50米" },
+            { "kind": "block", "text": "+30", "height": 0.7, "color": "#5b8def" }
+          ]
+        },
+        { "do": "show", "target": "a1" }
+      ]
+    },
+    {
+      "title": "两种速度一共差 480+150=630 米",
+      "narration": "同样多的分钟：① 少 **480 米**，② 多 **150 米**。\n\n两种走法一共差 **480+150=630 米**。",
+      "formula": "480+150=630\\text{（米）}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "求准时到校要走几分钟",
+      "narration": "每一份差 30 米，一共差 630 米。\n\n630 里面有几个 30，就有几分钟：**630÷30=21**（分钟）。",
+      "formula": "\\begin{aligned}\\text{分钟：}&(480+150)\\div(80-50)\\\\&=630\\div 30\\\\&=21\\text{（分）}\\end{aligned}",
+      "actions": [
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" },
+        { "do": "brace", "target": "r2", "slots": [1, 21], "text": "21 分钟" }
+      ]
+    },
+    {
+      "title": "求家到学校的路程",
+      "narration": "21 分钟，每分钟 80 米，一共能走 21×80=**1680 米**。\n\n可最后 6 分钟没有路，要减掉 480 米：**1680−480=1200（米）**\n\n按 ② 验算：21×50=1050，再加上多出来的 150 米，1050+150=1200，也是 1200 米。",
+      "formula": "\\begin{aligned}\\text{路程：}&21\\times 80-480\\\\&=1680-480\\\\&=1200\\text{（米）}\\end{aligned}",
+      "actions": [
+        { "do": "clearNotes", "target": "r2" },
+        { "do": "divider", "target": "r2", "after": 21, "text": "准时到校" },
+        { "do": "brace", "target": "r1", "slots": [1, 21], "text": "21×80=1680米", "side": "above" }
+      ]
+    },
+    {
+      "title": "小结：把路分给每一分钟",
+      "narration": "这一题的方法：\n- **分什么**：把**路的长度**分给每一分钟 —— 和“分苹果”是一个道理。\n- ① 少 **480 米**，② 多 **150 米**，总差 **630 米**；每一份差 **30 米**。\n- **份数 = 总差 ÷ 每份差**：630÷30=21（分钟）。\n- 再用 21×80−480（或 21×50+150）求出路程 **1200 米**。",
+      "formula": "\\text{份数}=\\text{总差}\\div\\text{每份差}",
+      "actions": [
+        { "do": "brace", "target": "r2", "slots": [1, 21], "text": "21 分钟" }
+      ]
+    }
+  ]
+}

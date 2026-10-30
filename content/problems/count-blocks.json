@@ -1,0 +1,101 @@
+{
+  "id": "count-blocks",
+  "title": "数一数：一共有多少块积木",
+  "grade": [3, 4, 5],
+  "tags": ["立体几何", "数积木", "三视图"],
+  "problem": "用同样大小的小正方体积木搭成一个立体图形（如 3D 图所示），一共用了多少块积木？从正面、左面、上面看，分别能看到什么形状？",
+  "answer": "一共 10 块（6 + 3 + 1）。正面看是 1、3、1 层，左面看是 2、3、2 层，上面看是 6 个小正方形。",
+  "scene": {
+    "objects": [
+      { "id": "blocks", "type": "CubeStack", "heights": [[1, 2, 0], [1, 3, 1], [0, 2, 0]] },
+      { "id": "viewTip", "type": "Label", "text": "", "position": [0, -2.4, 2.5], "visible": false }
+    ],
+    "camera": { "position": [6, 4.5, 7] }
+  },
+  "steps": [
+    {
+      "title": "先整体看一看",
+      "narration": "这是用小正方体积木搭起来的立体图形。拖动画面转一转，从不同的角度看看它。\n\n有的地方只有 1 层，有的地方叠了 **3 层**。有的积木被挡住了，从外面看不到，但它们也要数进去。\n\n怎么才能不漏数、不重复数呢？我们**一层一层**来数。",
+      "autoRotate": true
+    },
+    {
+      "title": "第 0 层（最下面一层）",
+      "narration": "先数**最下面**这一层，别的层我先变淡了。\n\n每块积木头上的数字就是数到第几块，一共数到 **6**。\n\n最下面一层有 **6 块**。",
+      "formula": "\\text{第 0 层} = 6",
+      "actions": [
+        { "do": "clear", "target": "blocks" },
+        { "do": "fade", "target": "blocks", "opacity": 0.1 },
+        { "do": "fade", "target": "blocks", "filter": { "layer": 0 }, "opacity": 1 },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 0 }, "color": "blue" },
+        { "do": "number", "target": "blocks", "filter": { "layer": 0 } }
+      ]
+    },
+    {
+      "title": "第 1 层（中间一层）",
+      "narration": "再数**中间**这一层。这一层的积木都叠在第 0 层的上面。\n\n数一数，一共 **3 块**。",
+      "formula": "\\text{第 1 层} = 3",
+      "actions": [
+        { "do": "clear", "target": "blocks" },
+        { "do": "fade", "target": "blocks", "opacity": 0.1 },
+        { "do": "fade", "target": "blocks", "filter": { "layer": 1 }, "opacity": 1 },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 1 }, "color": "yellow" },
+        { "do": "number", "target": "blocks", "filter": { "layer": 1 } }
+      ]
+    },
+    {
+      "title": "第 2 层（最上面一层）",
+      "narration": "最后是**最上面**这一层，只有 **1 块**，它站在最高的那一摞的顶上。",
+      "formula": "\\text{第 2 层} = 1",
+      "actions": [
+        { "do": "clear", "target": "blocks" },
+        { "do": "fade", "target": "blocks", "opacity": 0.1 },
+        { "do": "fade", "target": "blocks", "filter": { "layer": 2 }, "opacity": 1 },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 2 }, "color": "green" },
+        { "do": "number", "target": "blocks", "filter": { "layer": 2 } }
+      ]
+    },
+    {
+      "title": "加起来：一共 10 块",
+      "narration": "三层都数完了，把它们加起来：\n\n**6**（蓝色）+ **3**（黄色）+ **1**（绿色）= **10**\n\n一共用了 **10 块**积木。一层一层地数，就不会漏掉被挡住的积木啦。",
+      "formula": "6 + 3 + 1 = 10",
+      "actions": [
+        { "do": "clear", "target": "blocks" },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 0 }, "color": "blue" },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 1 }, "color": "yellow" },
+        { "do": "highlight", "target": "blocks", "filter": { "layer": 2 }, "color": "green" }
+      ]
+    },
+    {
+      "title": "正视图：从正面看",
+      "narration": "现在站在**正前方**看。左边一摞最高是 **1** 层，中间最高是 **3** 层，右边最高是 **1** 层。\n\n所以从正面看，是一个“**凸**”字形：左右矮，中间高。\n\n注意：前后挤在一起的积木，从正面看只算一列。",
+      "formula": "\\text{正面：}1,\\ 3,\\ 1",
+      "camera": { "position": [0, 0, 11], "projection": "orthographic" },
+      "actions": [
+        { "do": "clear", "target": "blocks" },
+        { "do": "show", "target": "viewTip" },
+        { "do": "move", "target": "viewTip", "position": [0, -2.4, 2.5] },
+        { "do": "setText", "target": "viewTip", "text": "从正面看" }
+      ]
+    },
+    {
+      "title": "左视图：从左面看",
+      "narration": "再走到**左边**去看。从左往右依次是三排：最高分别是 **2** 层、**3** 层、**2** 层。\n\n所以从左面看，是一座“小山”：中间高，两边矮一点。\n\n对比一下：正面看是 1、3、1，左面看是 2、3、2，不一样哦！",
+      "formula": "\\text{左面：}2,\\ 3,\\ 2",
+      "camera": { "position": [-11, 0, 0], "projection": "orthographic" },
+      "actions": [
+        { "do": "move", "target": "viewTip", "position": [-2.5, -2.4, 0] },
+        { "do": "setText", "target": "viewTip", "text": "从左面看" }
+      ]
+    },
+    {
+      "title": "俯视图：从上面看",
+      "narration": "最后飞到**正上方**往下看。不管叠了几层，从上面只能看到每一摞的**顶**，每一摞看起来就是 1 个小正方形。\n\n数一数，一共有 **6 个**小正方形，正好等于最下面一层的 6 块。\n\n（俯视图里，画面**下方**是物体的正前方。）",
+      "formula": "\\text{上面：}6\\ \\text{个小正方形}",
+      "camera": { "position": [0, 11, 0.01], "projection": "orthographic" },
+      "actions": [
+        { "do": "move", "target": "viewTip", "position": [0, 0, 2.6] },
+        { "do": "setText", "target": "viewTip", "text": "从上面看" }
+      ]
+    }
+  ]
+}

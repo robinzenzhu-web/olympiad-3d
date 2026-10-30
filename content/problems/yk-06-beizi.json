@@ -1,0 +1,130 @@
+{
+  "id": "yk-06-beizi",
+  "title": "玻璃杯和保温杯",
+  "series": "三秋 S06 · 盈亏进阶",
+  "order": 6,
+  "section": "思维锦囊5",
+  "grade": [3],
+  "tags": ["盈亏问题", "差量分析"],
+  "problem": "商店里有玻璃杯和保温杯两种杯子，保温杯比玻璃杯贵10元。妈妈算了算，如果买10个玻璃杯还剩6元，如果买5个保温杯还缺4元。那么妈妈一共带了多少元？",
+  "answer": "86 元。",
+  "scene": {
+    "objects": [
+      {
+        "id": "r1", "type": "Bench", "position": [0, 0, 0], "label": "①", "slots": 10, "show": [[1, 3], [9, 10]],
+        "container": "seat", "caption": "个",
+        "countLabel": false,
+        "fill": [{ "kind": "block", "text": "玻" }],
+        "remainder": { "type": "extra", "text": "多6元", "items": [{ "kind": "block", "text": "6元", "height": 0.7 }] }
+      },
+      {
+        "id": "r2", "type": "Bench", "position": [0, -1.5, 0], "label": "②", "slots": 5,
+        "container": "seat", "caption": "个", "visible": false,
+        "fill": [{ "kind": "block", "text": "玻" }, { "kind": "block", "text": "+10", "height": 0.6 }],
+        "remainder": { "type": "short", "text": "少4元", "items": [{ "kind": "block", "text": "4元", "height": 0.7 }] }
+      },
+      { "id": "a1", "type": "Arrow", "from": [-2.6, 0.9, 0.6], "to": [-2.6, -0.1, 0.6], "text": "每份差 10元", "visible": false },
+      { "id": "a2", "type": "Arrow", "from": [4.1, 0.9, 0.6], "to": [4.1, 0.0, 0.6], "text": "总差 6+4+5个玻", "visible": false }
+    ],
+    "camera": { "position": [0.3, 2.4, 12], "target": [0.3, 0, 0] }
+  },
+  "steps": [
+    {
+      "title": "读题：把钱分给杯子",
+      "narration": "商店里有玻璃杯和保温杯，**保温杯比玻璃杯贵 10 元**。\n\n① 买 **10 个玻璃杯**，还剩 **6 元**；\n② 买 **5 个保温杯**，还差 **4 元**。\n\n问：妈妈一共带了多少元？\n\n**想法：** 相当于把“带的钱”分给每一个杯子，一个杯子就是一条板凳。记一个玻璃杯的价钱是 **玻**，那么一个保温杯就是 **玻+10**。",
+      "formula": "\\text{保温杯}=\\text{玻}+10"
+    },
+    {
+      "title": "② 买5个保温杯，还缺4元",
+      "narration": "先看 ②：只买 **5 个杯子**，每个杯子上写的是 **玻+10**（保温杯比玻璃杯贵 10 元）；杯子上方的 **保** 就是“保温杯”。\n\n钱不够，还差 **4 元**，就是右边红色虚线的那一块。",
+      "formula": "\\text{②}\\ \\ \\text{玻}+10\\ \\cdots\\ \\text{玻}+10\\quad \\text{少 }4\\text{ 元}",
+      "actions": [
+        { "do": "move", "target": "r1", "position": [0, 1.5, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "countText": "保", "segments": [{ "kind": "block", "text": "玻" }, { "kind": "block", "text": "+10", "height": 0.6 }] }
+      ]
+    },
+    {
+      "title": "想一想：能直接比吗？",
+      "type": "quiz",
+      "narration": "方法一：**统一杯子的数量**。",
+      "question": "① 买了 10 个玻璃杯，② 只买了 5 个保温杯。个数不一样、种类也不一样，能直接比吗？",
+      "options": ["能，直接比还剩多少元", "不能，要先想办法让它们变得一样"],
+      "answer": 1,
+      "explanation": "对！要先让它们**变得一样**才能比。方法一：让**个数**一样（① 也变成 5 个）；方法二：让**种类**一样（② 的保温杯都换成玻璃杯）。下面两种都学。"
+    },
+    {
+      "title": "方法一：① 只买5个玻，多6元+5个玻",
+      "narration": "买 10 个玻璃杯还剩 6 元。现在只买 **5 个**，就少花 5 个“玻”的钱。\n\n所以剩下的钱变成 **6 元 再加 5 个玻**（右边行尾的两块）。",
+      "formula": "\\text{①}\\ \\ \\text{玻}\\ \\cdots\\ \\text{玻}\\quad \\text{多 }6\\text{ 元}+5\\text{个玻}",
+      "actions": [
+        { "do": "setSlots", "target": "r1", "slots": 5 },
+        { "do": "remainder", "target": "r1", "value": { "type": "extra", "text": "多6元+5个玻", "items": [{ "kind": "block", "text": "6元", "height": 0.7 }, { "kind": "block", "text": "5个玻", "height": 0.7 }] } }
+      ]
+    },
+    {
+      "title": "方法一：每个杯子差 10 元",
+      "narration": "现在两行都是 **5 个杯子**，可以一个一个比了。\n\n① 每个杯子是“玻”，② 每个杯子是“玻+10”，**每个杯子差 10 元**。",
+      "formula": "10\\text{（元）}",
+      "actions": [{ "do": "show", "target": "a1" }]
+    },
+    {
+      "title": "方法一：一共差 5×10=50 元",
+      "narration": "5 个杯子，每个差 10 元，一共差 **5×10=50 元**。\n\n这 50 元正好等于：① 多的 6 元 + ② 少的 4 元 + 5 个“玻”的钱。",
+      "formula": "5\\times 10=6+4+5\\text{个玻}",
+      "actions": [{ "do": "show", "target": "a2" }]
+    },
+    {
+      "title": "方法一：5个玻 = 50−6−4 = 40元",
+      "narration": "从 50 元里去掉多的 **6 元**、少的 **4 元**，剩下的就是 **5 个玻璃杯的钱**：\n\n50−6−4=**40 元**。",
+      "formula": "\\begin{aligned}5\\text{个玻}&=5\\times 10-6-4\\\\&=50-10\\\\&=40\\text{（元）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r1", "slots": [1, 5], "text": "5个玻=40元", "side": "above" }]
+    },
+    {
+      "title": "方法一：1个玻8元，一共带86元",
+      "narration": "5 个玻璃杯 40 元，1 个就是 **40÷5=8 元**。\n\n再回到 ①：10 个玻璃杯要 80 元，还剩 6 元，所以妈妈带了 **86 元**。\n\n验算：5 个保温杯要 5×(8+10)=90 元，86 元差 4 元 ✓",
+      "formula": "\\begin{aligned}1\\text{个玻}&=40\\div 5=8\\text{（元）}\\\\\\text{共带}&=10\\times 8+6=86\\text{（元）}\\end{aligned}",
+      "actions": [
+        { "do": "clearNotes", "target": "r1" },
+        { "do": "brace", "target": "r1", "slots": [1, 5], "text": "每杯 8 元", "side": "above" }
+      ]
+    },
+    {
+      "title": "方法二：回到题目，都换成玻璃杯",
+      "narration": "方法二：**统一杯子的类型**——把保温杯都换成玻璃杯再比。\n\n先把画面恢复成题目的样子：① 10 个玻璃杯多 6 元，② 5 个保温杯少 4 元。",
+      "actions": [
+        { "do": "reset", "target": "r1" },
+        { "do": "reset", "target": "r2" },
+        { "do": "move", "target": "r1", "position": [0, 1.5, 0] },
+        { "do": "show", "target": "r2" },
+        { "do": "fill", "target": "r2", "slots": "all", "countText": "保", "segments": [{ "kind": "block", "text": "玻" }, { "kind": "block", "text": "+10", "height": 0.6 }] },
+        { "do": "hide", "target": "a1" },
+        { "do": "hide", "target": "a2" }
+      ]
+    },
+    {
+      "title": "方法二：5个保换成5个玻，多46元",
+      "narration": "把 ② 的 5 个保温杯都换成玻璃杯：每个便宜 10 元，一共省 **50 元**。\n\n本来还差 4 元，省下的钱补上 4 元，还剩 **50−4=46 元**。所以 ② 变成：5 个玻，多 46 元。",
+      "formula": "\\text{②}\\ \\ \\text{玻}\\ \\cdots\\ \\text{玻}\\quad \\text{多 }5\\times 10-4=46\\text{ 元}",
+      "actions": [
+        { "do": "fill", "target": "r2", "slots": [1, 5], "countText": "", "segments": [{ "kind": "block", "text": "玻" }] },
+        { "do": "remainder", "target": "r2", "value": { "type": "extra", "text": "多5×10−4=46元", "items": [{ "kind": "block", "text": "46元", "height": 0.7 }] } }
+      ]
+    },
+    {
+      "title": "方法二：两种买法差 46−6=40 元",
+      "narration": "现在两行都是“玻”，可以直接比了：\n\n① 买 10 个玻，多 6 元；② 买 5 个玻，多 46 元。\n\n钱一样多，少买 **5 个玻**，就多剩下 **46−6=40 元** —— 这 40 元就是 **5 个玻璃杯的钱**。",
+      "formula": "46-6=40\\text{（元）}",
+      "actions": [
+        { "do": "setText", "target": "a2", "text": "差 46−6=40元" },
+        { "do": "show", "target": "a2" }
+      ]
+    },
+    {
+      "title": "方法二：1个玻8元，一共带86元",
+      "narration": "5 个玻璃杯 40 元，1 个就是 **8 元**，一共带 **8×10+6=86 元**。\n\n两种方法答案一样：妈妈带了 **86 元**。\n- 方法一：统一**杯子的数量**（都变成 5 个）\n- 方法二：统一**杯子的类型**（都变成玻璃杯）",
+      "formula": "\\begin{aligned}1\\text{个玻}&=40\\div 5=8\\\\\\text{共带}&=8\\times 10+6=86\\text{（元）}\\end{aligned}",
+      "actions": [{ "do": "brace", "target": "r2", "slots": [1, 5], "text": "5个玻=40元" }]
+    }
+  ]
+}

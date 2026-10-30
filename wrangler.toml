@@ -1,0 +1,5 @@
+# Cloudflare Pages 项目（绑定域名 452242533.xyz）
+# 部署：npm run deploy
+name = "robinzen209555"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"
